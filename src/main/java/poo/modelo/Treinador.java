@@ -1,6 +1,6 @@
 package poo.modelo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Treinador extends Card {
     private Acao tipo;
@@ -18,7 +18,7 @@ public class Treinador extends Card {
         this.cura = cura; //30 ou 60
     }
 
-    public void treinador(Pokemon pativo, ArrayList<Card> descarte, ArrayList<Card> banco, ArrayList<Card> ativo, ArrayList<Card> mao) {
+    public void treinador(Pokemon pativo, List<Card> descarte, List<Card> banco, List<Card> ativo, List<Card> mao) {
         if (tipo == Acao.CURA) {
             curarDanos(pativo);
         } else if (tipo == Acao.POKEBOLA) {
@@ -52,7 +52,7 @@ public class Treinador extends Card {
 
 
     //mexer em algum baralho e procurar um pokemon basico -reviver
-    public void reviver(ArrayList<Card> descarte, ArrayList<Card> banco) {
+    public void reviver(List<Card> descarte, List<Card> banco) {
         if (banco.size() < 3) {
             for (Card c : descarte) {
                 if (c instanceof Pokemon) {
@@ -74,7 +74,7 @@ public class Treinador extends Card {
 
     //trocar o pokemon ativo pelo bem da esquerda do banco
     //substituicao
-    public void substituicao(ArrayList<Card> banco, ArrayList<Card> ativo, ArrayList<Card> mao) {
+    public void substituicao(List<Card> banco, List<Card> ativo, List<Card> mao) {
 
         if (banco.size() != 0) {
             Card c = banco.get(0);
@@ -97,7 +97,7 @@ public class Treinador extends Card {
     }
 
     //mexer em algum baralho e procurar 3 cartas de energia (se nao achar, colocar null)
-    public void recuperacaoEnergia(ArrayList<Card> descarte, ArrayList<Card> mao) {
+    public void recuperacaoEnergia(List<Card> descarte, List<Card> mao) {
         int contador = 0;
         for (Card c : descarte) {
             if (contador<3) {
@@ -115,7 +115,7 @@ public class Treinador extends Card {
         }
     }
 
-    public void substituicaoEnergia(Pokemon ativo, ArrayList<Card> banco) {
+    public void substituicaoEnergia(Pokemon ativo, List<Card> banco) {
         Pokemon maiorEnergia = null;
         for (Card c : banco) {
             if (c instanceof Pokemon) {

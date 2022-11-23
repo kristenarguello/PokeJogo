@@ -24,6 +24,10 @@ public class CardDeck {
 		return selected.get(tam+1);
 	}
 
+	public List<Card> getAtivo() {
+		return selected;
+	}
+
 	public List<Card> getDeck() {
 		return deck;
 	}
@@ -149,14 +153,14 @@ public class CardDeck {
 	}
 
 	public void removeSel() {
-		if (selected == null) {
+		if (selected.size()==0) {
 			return;
 		}
-		deck.remove(selected);
-		selected = null;
-		GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.REMOVESEL, "");
-		for (var observer : observers) {
-			observer.notify(gameEvent);
+		if (Pokemon.morrer(descarte,selected)) {
+			GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.REMOVESEL, "");
+			for (var observer : observers) {
+				observer.notify(gameEvent);
+			}
 		}
 	}
 

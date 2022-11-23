@@ -8,58 +8,36 @@ import java.util.List;
 
 public class Game {
 	private static Game game = new Game();
-	//private int ptsJ1, ptsJ2;
 	private CardDeck deckJ1, deckJ2;
-	//tem o mesa dentro
 	private int player;
-	private int jogadas;
 	private List<GameListener> observers;
+	private int ganhador;
 	
 	public static Game getInstance() {
 		return game;
 	}
 
 	private Game() {
-		//ptsJ1 = 0;
-		//ptsJ2 = 0;
-		deckJ1 = new CardDeck(CardDeck.NCARDS);
-		deckJ2 = new CardDeck(CardDeck.NCARDS);
-		ativoJ1 = 
-		ativoJ2 =
+		deckJ1 = new CardDeck(30); //aparecer na iiinterface o List Card ao inves do cardDeck
+		deckJ2 = new CardDeck(30);
 		player = 1;
-		jogadas = CardDeck.NCARDS;
 		observers = new LinkedList<>();
+		ganhador = 0;
 	}
 
 	private void nextPlayer() {
 		player++;
-		if (player == 4) {
+		if (player == 28) {
 			player = 1;
 		}
 	}
-
-	// public int getPtsJ1() {
-	// 	return ptsJ1;
-	// }
-
-	// public int getPtsJ2() {
-	// 	return ptsJ2;
-	// }
 
 	public CardDeck getDeckJ1() {
 		return deckJ1;
 	}
 
 	public CardDeck getDeckJ2() {
-		return deckJ2;
-	}
-
-	public CardDeck getMesaJ1() {
-		return mesaJ1;
-	}
-
-	public CardDeck getMesaJ2() {
-		return mesaJ2;
+		return deckJ2;//dentro tem os outros baralhos
 	}
 
 	public void play(CardDeck deckAcionado) {
@@ -110,22 +88,19 @@ public class Game {
 	// Acionada pelo botao de limpar
 	public void removeSelected() {
 		GameEvent gameEvent = null;
-		if (player != 3) {
+		if (player != 28) {
 			return;
 		}
-		jogadas--;
-		if (jogadas == 0) {
+		if (ganhador != 0) {
 			gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.ENDGAME, "");
 			for (var observer : observers) {
 				observer.notify(gameEvent);
 			}
 		}
 		
-		mesaJ1.addCard( deckJ1.getSelected() );
 		deckJ1.removeSel();
-		
-		mesaJ2.addCard( deckJ2.getSelected() );
 		deckJ2.removeSel();
+
 		nextPlayer();
 	}
 	

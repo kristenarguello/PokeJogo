@@ -1,6 +1,6 @@
 package poo.modelo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Pokemon extends Card {
 
@@ -34,7 +34,7 @@ public class Pokemon extends Card {
     }
 
     //aplicar evolucao
-    public void evoluir(Pokemon evolucao, ArrayList<Card> ativo) {//chama a partir do basico 
+    public void evoluir(Pokemon evolucao, List<Card> ativo) {//chama a partir do basico 
         if (getNome().equals(evolucao.getGeracaoAnterior())) {
             ativo.add(evolucao);
             //PERGUNTAAAAA lista pra ativos ou outro baralho pra colocar os basicos
@@ -77,13 +77,15 @@ public class Pokemon extends Card {
     }
 
     //morre
-    public static void morrer(ArrayList<Card> descarte, ArrayList<Card> ativo) {
+    public static boolean morrer(List<Card> descarte, List<Card> ativo) {
         if (ativo.size()==1) {
             Card a = ativo.get(0);
             Pokemon p = (Pokemon)a;
             if (p.getPs() <= 0) {
                 p.setEnergia();
                 descarte.add(p);
+                ativo.clear();   
+                return true;
             }
         } else {
             for (Card c : ativo) {
@@ -95,13 +97,15 @@ public class Pokemon extends Card {
                                 Pokemon b = (Pokemon)a;
                                 b.setEnergia();
                                 descarte.add(b);
+                                ativo.clear();   
+                                return true;
                             }
                         }
                     }
                 }
             }
         }     
-        ativo.clear();   
+        return false;
     }
 
     public int getValorAtaque() {

@@ -1,0 +1,40 @@
+separar os baralhos :)
+
+*mostrar energia e saude e todos os outros coisas que diminuem no final das duas jogadas
+
+1 - jogador 1 compra uma carta - clicar no baralho OBRIGATORIO
+2 - jogador 1 coloca algum pokemon basico para a reserva - mensagem, clicar nas cartas, depois botao para seguir PODE PASSAR
+3 - jogador 1 escolhe uma evolucao (carta) pra aplicar - mensagem, clicar na carta, botao para seguir PODE PASSAR
+4 - jogador 1 escolhe um pokemon basico do banco ou ativo para evoluir (caso 3 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+5 - jogador 1 escolhe a carta que aplica energia -- vai no ativo (se nao tiver a carta, passar direto essa etapa) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+6 - jogador 1 escolher uma carta treinador para se utilizar (aplicar no ativo caso seja de pokemon) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+7 - acontece a ação da carta treinador (caso 6 seja true) - acontece, mensagem depois dizendo o que aconteceu (sem botão, passa direto)
+8 - jogador 1 escolhe se quer trocar o pokemon ativo - mensagem, botao para decidir se quer ou não OBRIGATÓRIO
+9 - jogador 1 ecolhe qual pokemon do banco vai substituir o ativo (caso 8 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+10 - jogador 1 aperta o botão de atacar - clicar no botão (se não for possível, aparece mensagem) OBRIGATÓRIO
+AVISO DE TROCA DE JOGADOR
+11 - jogador 2 compra uma carta - clicar no baralho OBRIGATORIO
+12 - jogador 2 coloca algum pokemon basico para a reserva - mensagem, clicar nas cartas, depois botao para seguir PODE PASSAR
+13 - jogador 2 escolhe uma evolucao (carta) pra aplicar - mensagem, clicar na carta, botao para seguir PODE PASSAR
+14 - jogador 2 escolhe um pokemon basico do banco ou ativo para evoluir (caso 3 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+15 - jogador 2 escolhe a carta que aplica energia -- vai no ativo (se nao tiver a carta, passar direto essa etapa) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+16 - jogador 2 escolher uma carta treinador para se utilizar (aplicar no ativo caso seja de pokemon) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+17 - acontece a ação da carta treinador (caso 6 seja true) - acontece, mensagem depois dizendo o que aconteceu (sem botão, passa direto)
+18 - jogador 2 escolhe se quer trocar o pokemon ativo - mensagem, botao para decidir se quer ou não OBRIGATÓRIO
+19 - jogador 2 ecolhe qual pokemon do banco vai substituir o ativo (caso 8 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+20 -  jogador 2 aperta o botão de atacar - clicar no botão (se não for possível, aparece mensagem) OBRIGATÓRIO
+
+*aqui!
+21 - checar se alguem morreu AUTOMATICO, pode ser os dois ao mesmo tempo
+22 - o que foi derrotado, é descartado AUTOMATICO
+AVISO PARA JOGADOR 1
+23 - confere se tem banco no jogador 1, se não perdeu OBRIGATORIO
+24 - jogador 1 escolhe qual do banco vai substituir - escolhe a carta, clica botao continuar CASO 23 TRUE
+AVISO DE TROCA DE JOGADOR
+25 - confere se tem banco no jogador 2, se não perdeu OBRIGATORIO, ARMAZENA 
+26 - jogador 2 escolhe qual do banco vai substituir - ecolhe a carta, clica botao continuar CASO 25 TRUE
+
+27 - aviso de quem ganhou (a partir de 23 e 24 caso false - caso nao tenham mais cartas) CASO FALSE 
+28 - botao pra proxima rodada, caso 27 false
+***boolean fim de jogo (while false)
+
