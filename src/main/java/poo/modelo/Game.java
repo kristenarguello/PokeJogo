@@ -8,7 +8,44 @@ import java.util.List;
 
 public class Game {
 	private static Game game = new Game();
-	private CardDeck deckJ1, deckJ2;
+	private CardDeck deckJ1, deckJ2;//tirar daqui, e fazer que nem get instance de game (singleton)
+	private CardDeck mao1, mao2;
+	private CardDeck ativo1, ativo2;
+	private CardDeck descarte1, descarte2;
+	private CardDeck banco1, banco2;
+
+	public CardDeck getMao1() {
+		return mao1;
+	}
+
+	public CardDeck getMao2() {
+		return mao2;
+	}
+
+	public CardDeck getAtivo1() {
+		return ativo1;
+	}
+
+	public CardDeck getAtivo2() {
+		return ativo2;
+	}
+
+	public CardDeck getDescarte1() {
+		return descarte1;
+	}
+
+	public CardDeck getDescarte2() {
+		return descarte2;
+	}
+
+	public CardDeck getBanco1() {
+		return banco1;
+	}
+
+	public CardDeck getBanco2() {
+		return banco2;
+	}
+
 	private int player;
 	private List<GameListener> observers;
 	private int ganhador;

@@ -12,11 +12,11 @@ import java.util.Stack;
 
 public class CardDeck {
 	private List<Card> deck;
-	private List<Card> ativo;
 	private List<GameListener> observers;
 
 	private Card selected;
 
+	private List<Card> ativo;
 	private List<Card> mao;
 	private List<Card> banco;
 	private List<Card> descarte;
@@ -50,9 +50,13 @@ public class CardDeck {
 		return descarte;
 	}
 
+
+
 	public static int energia = 0;
 	public static int pokemon = 0;
 	public static int treinador = 0;
+
+	
 
 	public CardDeck(int nrCartas) {
 		deck = new ArrayList<>();

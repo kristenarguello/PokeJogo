@@ -146,7 +146,10 @@ public class GameWindow extends Application implements GameListener {
 				break;
 			case REMOVESEL:
 				// Esse evento não vem para cá
+			//case MUSTBUY:
+
 			}
+			
 		}
 	}
 
