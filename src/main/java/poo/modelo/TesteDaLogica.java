@@ -22,6 +22,8 @@ public class TesteDaLogica {
         um.printar(um.getBanco());
         System.out.println("\nDESCARTE");
         um.printar(um.getDescarte());
+        System.out.println("\nATIVO");
+        um.printar(um.getAtivo());
 
     }
 }

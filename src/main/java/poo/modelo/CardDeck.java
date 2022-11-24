@@ -12,20 +12,26 @@ import java.util.Stack;
 
 public class CardDeck {
 	private List<Card> deck;
-	private List<Card> selected;
+	private List<Card> ativo;
 	private List<GameListener> observers;
+
+	private Card selected;
 
 	private List<Card> mao;
 	private List<Card> banco;
 	private List<Card> descarte;
 	
+	public Card getPokAtivo() {
+		int tam = ativo.size();
+		return ativo.get(tam+1);
+	}
+	
 	public Card getSelected() {
-		int tam = selected.size();
-		return selected.get(tam+1);
+		return selected;
 	}
 
 	public List<Card> getAtivo() {
-		return selected;
+		return ativo;
 	}
 
 	public List<Card> getDeck() {
@@ -53,6 +59,7 @@ public class CardDeck {
 		mao = new ArrayList<>();
 		banco = new ArrayList<>();
 		descarte = new ArrayList<>();
+		ativo = new ArrayList<>();
 
 
 		int totalCartas = 0;
@@ -153,10 +160,10 @@ public class CardDeck {
 	}
 
 	public void removeSel() {
-		if (selected.size()==0) {
+		if (ativo.size()==0) {
 			return;
 		}
-		if (Pokemon.morrer(descarte,selected)) {
+		if (Pokemon.morrer(descarte,ativo)) {
 			GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.REMOVESEL, "");
 			for (var observer : observers) {
 				observer.notify(gameEvent);
@@ -173,8 +180,8 @@ public class CardDeck {
 		}
 	}
 
-	public void addSelected(Card card) {
-		selected.add(card);
+	public void addAtivo(Card card) {
+		ativo.add(card);
 	}
 
 	public void addGameListener(GameListener listener) {
@@ -219,15 +226,21 @@ public class CardDeck {
 		pos = 0;
 		while(cont<5) {
 			if (mao.get(pos) instanceof Pokemon) {
-				Pokemon p = (Pokemon)mao.get(pos++);
+				Pokemon p = (Pokemon)mao.get(pos);
 				if (p.getGeracaoAnterior() == null) {
-					mao.remove(p);
-				}
-			}
+					mao.remove(pos);
+				} 
+			} else 
+				pos++;
 			cont++;
 		}
-		
+
+		Card c = banco.get(0);
+		banco.remove(0);
+		ativo.add(c);
 	}
 
-
+	public void setSelectedCard(Card card) {
+		selected = card;
+	}
 }

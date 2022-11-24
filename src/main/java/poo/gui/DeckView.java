@@ -88,7 +88,7 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 	public void handle(CardViewEvent event) {
 		CardView cv = event.getCardView();
 		selectedCard = cv.getCard();
-		cDeck.addSelected(selectedCard);
-		Game.getInstance().outroPlayzao();
+		cDeck.setSelectedCard(selectedCard);
+		Game.getInstance().outroPlayzao(cDeck);
 	}
 }

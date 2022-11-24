@@ -1,6 +1,6 @@
 package poo.modelo;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Energia extends Card {
     private int quantia;
@@ -15,12 +15,13 @@ public class Energia extends Card {
     }
 
     //adicionar energia no pokemon
-    public void setEnergia(Pokemon pokemon, ArrayList<Card> descarte, ArrayList<Card> mao) {
+    public static void setEnergia(Pokemon pokemon, List<Card> descarte, List<Card> mao) {
         pokemon.setEnergia(pokemon.getEnergia() + 10);
         for (Card c : mao) {
             if (c instanceof Energia) {
                 descarte.add(c);
                 mao.remove(c);
+                break; //se der errado separar mao.remove
             }
         }
     }

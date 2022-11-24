@@ -13,9 +13,6 @@ public class Pokemon extends Card {
     private Tipos tipo;
     private int energia;
 
-
-    
-
     public Pokemon(int valorAtaque, int ps, Tipos tipo, String nome, String geracaoAnterior, String anId, String anImageId) {
         super(anId, anImageId,nome);
         this.valorAtaque = valorAtaque;
@@ -46,7 +43,7 @@ public class Pokemon extends Card {
     }
 
     //ataque acontece (dano)
-    public void atacar(Pokemon atacante, Pokemon atacado) {
+    public static void atacar(Pokemon atacante, Pokemon atacado) {
         if (atacante.getEnergia()>=atacante.getEnergiaGasta()) {
             double diferenca = 1;
             if (atacante.getTipo()==Tipos.FOGO) {

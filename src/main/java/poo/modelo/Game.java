@@ -27,7 +27,7 @@ public class Game {
 
 	private void nextPlayer() {
 		player++;
-		if (player == 28) {
+		if (player == 16) {
 			player = 1;
 		}
 	}
@@ -42,18 +42,18 @@ public class Game {
 
 	public void playzinho(CardDeck deckAcionado, GameEvent gameEvent) {
 		int n;
-		if (player>10)
-			n = player - 10;
+		if (player>6)
+			n = player - 7;
 		else 
 			n = player;
 
-		if (deckAcionado==deckJ1 && player>10){
+		if (deckAcionado==deckJ1 && player>6){
 			gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "2");
 			for (var observer : observers) {
 				observer.notify(gameEvent);
 			}
 		}
-		if(deckAcionado==deckJ2 && player<11){
+		if(deckAcionado==deckJ2 && player<7){
 			gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "1");
 			for (var observer : observers) {
 				observer.notify(gameEvent);
@@ -98,61 +98,102 @@ public class Game {
 				acontece = true;
 			}
 
-			
-			Pokemon p = null;
-			List<Card> aux = deckAcionado.getMao();
-			for (Card c : aux) {
-				if (c instanceof Pokemon) {
-					p = (Pokemon)c;
-					if (p.getGeracaoAnterior()!=null){
-						Pokemon carta = (Pokemon)deckAcionado.getAtivo().get(0);
-						carta.evoluir(p,deckAcionado.getAtivo());
-						break;
+			if (acontece) {
+				Pokemon p = null;
+				List<Card> aux = deckAcionado.getMao();
+				for (Card c : aux) {
+					if (c instanceof Pokemon) {
+						p = (Pokemon)c;
+						if (p.getGeracaoAnterior()!=null){
+							Pokemon carta = (Pokemon)deckAcionado.getAtivo().get(0);
+							carta.evoluir(p,deckAcionado.getAtivo());
+							break;
+						}
 					}
 				}
 			}
 			return;
 		}
 
-		//4 - jogador escolhe um pokemon basico do banco ou ativo para evoluir (caso 3 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+
+		//4 - jogador escolhe a carta que aplica energia -- vai no ativo (se nao tiver a carta, passar direto essa etapa) - mensagem, clicar na carta, botao para seguir PODE PASSAR
 		if (n == 4){
-			return;
+			boolean acontece = false;
+			for (Card c : deckAcionado.getMao())
+				if (c instanceof Energia) 
+					acontece = true;
+			
+			if (acontece) {
+				//aparece o botao pra fazer se quiser
+				Energia.setEnergia((Pokemon)deckAcionado.getPokAtivo(),deckAcionado.getDescarte(),deckAcionado.getMao());
+			}	
 		}
 
-		//5 - jogador escolhe a carta que aplica energia -- vai no ativo (se nao tiver a carta, passar direto essa etapa) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+		//5 - jogador escolher uma carta treinador para se utilizar (aplicar no ativo caso seja de pokemon) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+		// - acontece a ação da carta treinador (caso 6 seja true) - acontece, mensagem depois dizendo o que aconteceu (sem botão, passa direto)
+
 		if (n == 5){
+			boolean acontece = false;
+			for (Card c : deckAcionado.getMao())
+				if (c instanceof Treinador) 
+					acontece = true;
 			
+			if (acontece) {
+				//botao pra escolher se quer fazer
+				//escolhe a carta
+				Treinador selectedCard = null;//tem que ser a selecionada na tela, mudar isso
+				selectedCard.treinador((Pokemon)deckAcionado.getPokAtivo(),deckAcionado.getDescarte(),deckAcionado.getBanco(),deckAcionado.getAtivo(),deckAcionado.getMao());
+			}
 		}
 
-		//6 - jogador escolher uma carta treinador para se utilizar (aplicar no ativo caso seja de pokemon) - mensagem, clicar na carta, botao para seguir PODE PASSAR
+		//6 - jogador escolhe se quer trocar o pokemon ativo - mensagem, botao para decidir se quer ou não OBRIGATÓRIO
 		if (n == 6){
+			boolean acontece = false;
+			for (Card c : deckAcionado.getBanco()){
+				if (c instanceof Pokemon){
+					Pokemon aux = (Pokemon)c;
+					if (aux.getGeracaoAnterior()==null){
+						//mensagem se quer trocar o pokemon ativo
+						//se sim boolean vir true
+						acontece = true;
+					}
+				}
+			}
 			
-		}
+			if (acontece){
+				Pokemon selectedCard = null;//tem que ser a selecionada na tela, mudar isso
+				if (deckAcionado.getAtivo().size()==0){
+					deckAcionado.getBanco().add(deckAcionado.getAtivo().get(0));
+				}
 
-		//7 - acontece a ação da carta treinador (caso 6 seja true) - acontece, mensagem depois dizendo o que aconteceu (sem botão, passa direto)
-		if (n == 7){
-			
-		}
+				else {
+					deckAcionado.getBanco().add(deckAcionado.getAtivo().get(1));
+					deckAcionado.getDescarte().add(deckAcionado.getAtivo().get(0));
+				}
 
-		//8 - jogador escolhe se quer trocar o pokemon ativo - mensagem, botao para decidir se quer ou não OBRIGATÓRIO
-		if (n == 8){
-			
+				deckAcionado.getAtivo().clear();	
+				deckAcionado.getAtivo().add(selectedCard);
+				deckAcionado.getBanco().remove(selectedCard);
+			}
+
 		}
 		
-		//9 - jogador escolhe qual pokemon do banco vai substituir o ativo (caso 8 seja true) - mensagem, clicar na carta, botao para seguir PODE PASSAR
-		if (n == 9){
-			
-		}
-		
-		//10 - jogador aperta o botão de atacar - clicar no botão (se não for possível, aparece mensagem) OBRIGATÓRIO 
-		if (n == 10) {
+		//7 - jogador aperta o botão de atacar - clicar no botão (se não for possível, aparece mensagem) OBRIGATÓRIO 
+		if (n == 7) {
 			gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.MUSTATTACK, "");
 			for (var observer : observers) {
 				observer.notify(gameEvent);
 			}
+			CardDeck aux = null;
+			if (deckAcionado.equals(deckJ1))
+				aux = deckJ2;
+			else 
+				aux = deckJ1;
+			Pokemon.atacar((Pokemon)deckAcionado.getPokAtivo(),(Pokemon)aux.getPokAtivo());
 			
 			return;
 		}
+		/*
 		//acho q a partir daqui 
 		if (deckAcionado == deckJ1) {
 			if (n != 1) {	
@@ -186,14 +227,90 @@ public class Game {
 				}
 				// Próximo jogador
 				nextPlayer();
-			}
-		
-
+			}*/
 		}
 	
 
-	public void outroPlayzao() {
+	public void outroPlayzao(CardDeck deckAcionado) {
 		GameEvent gameEvent = null;
+		CardDeck aux;
+
+		/*
+		15 - checar se alguem morreu AUTOMATICO, pode ser os dois ao mesmo tempo
+		16 - o que foi derrotado, é descartado AUTOMATICO
+		AVISO PARA JOGADOR 1
+		17 - confere se tem banco no jogador 1, se não perdeu OBRIGATORIO
+		18 - jogador 1 escolhe qual do banco vai substituir - escolhe a carta, clica botao continuar CASO 23 TRUE
+		AVISO DE TROCA DE JOGADOR
+		19 - confere se tem banco no jogador 2, se não perdeu OBRIGATORIO, ARMAZENA 
+		20 - jogador 2 escolhe qual do banco vai substituir - ecolhe a carta, clica botao continuar CASO 25 TRUE
+
+		21 - aviso de quem ganhou (a partir de 23 e 24 caso false - caso nao tenham mais cartas) CASO FALSE 
+		22 - botao pra proxima rodada, caso 27 false
+		***boolean fim de jogo (while false)
+		*/
+		deckJ1.inicio();
+		deckJ2.inicio();
+
+		while (ganhador == 0) {
+			playzinho(deckAcionado, gameEvent);
+			nextPlayer();
+			if (player>14) {
+				if (deckAcionado.equals(deckJ1))
+					aux = deckJ2;
+				else 
+					aux = deckJ1;
+				if (player == 15) {
+					Pokemon.morrer(deckAcionado.getDescarte(), deckAcionado.getAtivo());
+					Pokemon.morrer(aux.getDescarte(),aux.getAtivo());
+				}
+				
+
+				if (deckAcionado.getAtivo().size()==0){
+					boolean perde = true;
+					for (Card c : deckAcionado.getBanco()){
+						if (c instanceof Pokemon){
+							Pokemon p = (Pokemon) c;
+							deckAcionado.getAtivo().add(p); //se o pokemon morre adiciona o primeiro possivel
+							deckAcionado.getBanco().remove(p);
+							perde = false;
+							break;
+						}
+					}
+					if(perde){
+						ganhador = 2;
+					}
+				}	
+				
+				if (aux.getAtivo().size()==0) {
+					boolean perde = true;
+					for (Card c : aux.getBanco()) {
+						if (c instanceof Pokemon) {
+							Pokemon p = (Pokemon)c;
+							aux.getAtivo().add(p);
+							aux.getBanco().remove(p);
+							perde = false;
+							break;
+						}
+					}
+					if(perde){
+						ganhador = 1;
+					}
+				}
+			}
+
+			if (player == 15) {
+				if (ganhador == 0) {
+					//mensagem de continuar o jogo, prox rodada
+				}
+			}
+
+		}
+		if (ganhador == 1) {
+			//aviso e acabou o jogo 
+		} else if (ganhador==2) {
+			//mensagem de ganhar
+		} 
 
 		gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.MUSTCLEAN, "");
 		for (var observer : observers) {
@@ -201,11 +318,10 @@ public class Game {
 		}
 	}
 	
-
 	// Acionada pelo botao de limpar
 	public void removeSelected() {
 		GameEvent gameEvent = null;
-		if (player != 28) {
+		if (player != 22) {
 			return;
 		}
 		if (ganhador != 0) {
