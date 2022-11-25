@@ -20,30 +20,54 @@ public class ImageFactory {
 
 	private String id2File(String imgId) {
 		switch (imgId) {
-		case "img1":
-			return ("/imagens/Um.png");
-		case "img2":
-			return ("/imagens/Dois.png");
-		case "img3":
-			return ("/imagens/Tres.png");
-		case "img4":
-			return ("/imagens/Quatro.png");
-		case "img5":
-			return ("/imagens/Cinco.png");
-		case "img6":
-			return ("/imagens/Seis.png");
-		case "img7":
-			return ("/imagens/Sete.png");
-		case "img8":
-			return ("/imagens/Oito.png");
-		case "img9":
-			return ("/imagens/Nove.png");
-		case "img10":
-			return ("/imagens/Dez.png");
-		case "imgBck":
-			return ("/imagens/Back.png");
+		case "imgSquirtle":
+			return ("/imagens/squirtle.png");
+		case "imgBulbasaur":
+			return ("/imagens/bulbasaur.png");
+		case "imgCharmander":
+			return ("/imagens/charmander.png");
+		case "imgEevee":
+			return ("/imagens/eevee.png");
+		case "imgSnorlax":
+			return ("/imagens/snorlax.png");
+		case "imgChansey":
+			return ("/imagens/chansey.png");
+		case "imgAlomomola":
+			return ("/imagens/alomomola.png");
+		case "imgMaractus":
+			return ("/imagens/maractus.png");
+		case "imgTorkoal":
+			return ("/imagens/torkoal.png");
+		case "imgPocao":
+			return ("/imagens/pocao.png");
+		case "imgSuper":
+			return ("/imagens/superPocao.png");
+		case "imgSubst":
+			return ("/imagens/substituicao.png");
+		case "imgRev":
+			return ("/imagens/reviver.png");
+		case "imgRecupera":
+			return ("/imagens/recuperacaoEnergia.png");
+		case "imgSubst_energ":
+			return ("/imgens/substituicao-energia.png");
+		case "imgVaporeon":
+			return ("/imagens/vaporeon.png");
+		case "imgFlareon":
+			return ("/imagens/flareon.png");
+		case "imgLeafeon":
+			return ("/imagens/leafeon.png");
+		case "imgEnergia":
+			return ("/imagens/energia.png");
+		case "imgWartortle":
+			return ("/imagens/wartortle.png");
+		case "imgIvysaur":
+			return ("/imagens/ivysaur.png");
+		case "imgCharmeleon":
+			return ("/imagens/charmeleon.png");
+		case "imgVerso":
+			return ("/imagens/verso.png");
 		default:
-			throw new IllegalArgumentException("Invalid image Id");
+			throw new IllegalArgumentException("Invalid image Id");
 		}
 	}
 
