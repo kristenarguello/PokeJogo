@@ -39,7 +39,7 @@ public class ImageFactory {
 		case "imgTorkoal":
 			return ("/imagens/torkoal.png");
 		case "imgPocao":
-			return ("/imagens/pocao.png"); //n aparece no jogo
+			return ("/imagens/pocao.png"); 
 		case "imgSuper":
 			return ("/imagens/superPocao.png");
 		case "imgSubst":

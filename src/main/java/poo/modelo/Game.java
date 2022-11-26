@@ -104,6 +104,7 @@ public class Game {
 		//2 - jogador coloca algum pokemon basico para a reserva - mensagem, clicar nas cartas, depois botao para seguir PODE PASSAR
 		if (n == 2){
 			//pergunta se quer fazer 
+			//testar se pode fazer
 			if (deckAcionado.getTipo()==5) {
 				Pokemon p;
 				if (deckAcionado.getSelected() instanceof Pokemon) {

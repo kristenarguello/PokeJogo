@@ -49,10 +49,18 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 
 		cDeck.addGameListener(this);
 
+		
+
+		if (jogador == 5 || jogador == 6) {
+			CardView cv = new CardView(cDeck.getCards().get(cDeck.getCards().size()-1));
+			cv.setCardViewObserver(this);
+			this.getChildren().add(cv);
+		} else {
 		for (Card card : cDeck.getCards()) {
 			CardView cv = new CardView(card);
 			cv.setCardViewObserver(this);
 			this.getChildren().add(cv);
+			}
 		}
 	}
 

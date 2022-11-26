@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import poo.modelo.Game;
 import poo.modelo.GameEvent;
@@ -99,11 +100,7 @@ public class GameWindow extends Application implements GameListener {
 		sd4.setContent(maoJ2);
 		grid2.add(sd4, 0, 1);
 
-		// DeckView ativoJ2 = new DeckView(6);
-		// ScrollPane sd6 = new ScrollPane();
-		// sd6.setPrefSize(1200, 250);
-		// sd6.setContent(ativoJ2);
-		// grid2.add(sd6, 0, 0);
+		
 
 		DeckView descarteJ2 = new DeckView(8);
 		ScrollPane sd8 = new ScrollPane();
@@ -111,11 +108,7 @@ public class GameWindow extends Application implements GameListener {
 		sd8.setContent(descarteJ2);
 		grid2.add(sd8, 0, 2);
 
-		// DeckView bancoJ2 = new DeckView(10);
-		// ScrollPane sd10 = new ScrollPane();
-		// sd10.setPrefSize(1200, 250);
-		// sd10.setContent(bancoJ2);
-		// grid2.add(sd10, 0, 0);
+		
 
 		Button butBuy2 = new Button("Comprar");
 		grid2.add(butBuy2, 1, 0);
@@ -129,7 +122,7 @@ public class GameWindow extends Application implements GameListener {
 //-------------------------------------------------------------------
 
 		GridPane grid3 = new GridPane();
-		grid3.setAlignment(Pos.CENTER);
+		grid3.setAlignment(Pos.BASELINE_LEFT);
 		grid3.setHgap(10);
 		grid3.setVgap(10);
 		grid3.setPadding(new Insets(25, 25, 25, 25));
@@ -153,6 +146,18 @@ public class GameWindow extends Application implements GameListener {
 		sd9.setContent(bancoJ1);
 		grid3.add(sd9, 1, 0);
 
+		DeckView ativoJ2 = new DeckView(6);
+		ScrollPane sd6 = new ScrollPane();
+		sd6.setPrefSize(1200, 250);
+		sd6.setContent(ativoJ2);
+		grid3.add(sd6, 0, 1);
+
+		DeckView bancoJ2 = new DeckView(10);
+		ScrollPane sd10 = new ScrollPane();
+		sd10.setPrefSize(1200, 250);
+		sd10.setContent(bancoJ2);
+		grid3.add(sd10, 1, 1);
+
 
 		tab1.setContent(grid1);
         tab2.setContent(grid2);
@@ -161,7 +166,8 @@ public class GameWindow extends Application implements GameListener {
 
 		root.getChildren().add(tabPane);
 		
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,Paint.valueOf("#DC143C"));
+		
 
         primaryStage.setScene(scene);
         primaryStage.show();
