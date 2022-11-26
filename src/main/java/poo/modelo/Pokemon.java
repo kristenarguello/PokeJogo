@@ -31,14 +31,14 @@ public class Pokemon extends Card {
     }
 
     //aplicar evolucao
-    public void evoluir(Pokemon evolucao, List<Card> ativo) {//chama a partir do basico 
+    public boolean evoluir(Pokemon evolucao, List<Card> ativo) {//chama a partir do basico 
         if (getNome().equals(evolucao.getGeracaoAnterior())) {
             ativo.add(evolucao);
-            //PERGUNTAAAAA lista pra ativos ou outro baralho pra colocar os basicos
-            //fazer na app, posicao ultima sendo o ativo msm
+            return true;
         } else {
             //faz a mensagenzinha:
             //"Evolução não compatível! Tente com outra carta numa próxima rodada."
+            return false;
         }
     }
 

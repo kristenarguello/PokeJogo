@@ -48,7 +48,7 @@ public class ImageFactory {
 			return ("/imagens/reviver.png");
 		case "imgRecupera":
 			return ("/imagens/recuperacaoEnergia.png");
-		case "imgSubst_energ":
+		case "imgSubstitu_energ":
 			return ("/imgens/substituicao-energia.png");
 		case "imgVaporeon":
 			return ("/imagens/vaporeon.png");
@@ -67,7 +67,7 @@ public class ImageFactory {
 		case "imgVerso":
 			return ("/imagens/verso.png");
 		default:
-			throw new IllegalArgumentException("Invalid image Id");
+			throw new IllegalArgumentException("Invalid image Id");
 		}
 	}
 

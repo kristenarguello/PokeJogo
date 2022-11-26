@@ -19,7 +19,6 @@ import poo.modelo.GameEvent;
 import poo.modelo.GameListener;
 
 public class GameWindow extends Application implements GameListener {
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -56,6 +55,40 @@ public class GameWindow extends Application implements GameListener {
 		sd1.setContent(deckJ1);
 		grid1.add(sd1, 0, 0);
 
+		// DeckView maoJ1 = new DeckView(3);
+		// ScrollPane sd3 = new ScrollPane();
+		// sd3.setPrefSize(1200, 250);
+		// sd3.setContent(maoJ1);
+		// grid1.add(sd3, 0, 0);
+
+		// DeckView ativoJ1 = new DeckView(5);
+		// ScrollPane sd5 = new ScrollPane();
+		// sd5.setPrefSize(1200, 250);
+		// sd5.setContent(ativoJ1);
+		// grid1.add(sd5, 0, 0);
+
+		// DeckView descarteJ1 = new DeckView(7);
+		// ScrollPane sd7 = new ScrollPane();
+		// sd7.setPrefSize(1200, 250);
+		// sd7.setContent(descarteJ1);
+		// grid1.add(sd5, 0, 0);
+
+		// DeckView bancoJ1 = new DeckView(9);
+		// ScrollPane sd9 = new ScrollPane();
+		// sd9.setPrefSize(1200, 250);
+		// sd9.setContent(bancoJ1);
+		// grid1.add(sd5, 0, 0);
+
+		// Button butBuy1 = new Button("Comprar");
+		// grid1.add(butBuy1, 1, 1);
+		// butBuy1.setOnAction(e -> Game.getInstance().comprarCarta(1));
+		
+		// Button butAtt = new Button("Atacar");
+		// grid1.add(butAtt, 1, 1);
+		// butBuy1.setOnAction(e -> Game.getInstance().atacar(1));
+
+
+//-------------------------------------------------------------------
 
 
 		GridPane grid2 = new GridPane();
@@ -71,31 +104,68 @@ public class GameWindow extends Application implements GameListener {
 		sd2.setContent(deckJ2);
 		grid2.add(sd2, 0, 2);
 
+		// DeckView maoJ2 = new DeckView(4);
+		// ScrollPane sd4 = new ScrollPane();
+		// sd4.setPrefSize(1200, 250);
+		// sd4.setContent(maoJ2);
+		// grid2.add(sd4, 0, 0);
+
+		// DeckView ativoJ2 = new DeckView(6);
+		// ScrollPane sd6 = new ScrollPane();
+		// sd6.setPrefSize(1200, 250);
+		// sd6.setContent(ativoJ2);
+		// grid2.add(sd6, 0, 0);
+
+		// DeckView descarteJ2 = new DeckView(8);
+		// ScrollPane sd8 = new ScrollPane();
+		// sd8.setPrefSize(1200, 250);
+		// sd8.setContent(descarteJ2);
+		// grid2.add(sd8, 0, 0);
+
+		// DeckView bancoJ2 = new DeckView(10);
+		// ScrollPane sd10 = new ScrollPane();
+		// sd10.setPrefSize(1200, 250);
+		// sd10.setContent(bancoJ2);
+		// grid2.add(sd10, 0, 0);
+
+		// Button butBuy2 = new Button("Comprar");
+		// grid2.add(butBuy2, 1, 1);
+		// butBuy2.setOnAction(e -> Game.getInstance().comprarCarta(2));
+
+		// Button butAtt2 = new Button("Atacar");
+		// grid2.add(butAtt2, 1, 1);
+		// butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
+
 	
+//-------------------------------------------------------------------
+
 		GridPane grid3 = new GridPane();
 		grid3.setAlignment(Pos.CENTER);
 		grid3.setHgap(10);
 		grid3.setVgap(10);
 		grid3.setPadding(new Insets(25, 25, 25, 25));
 
-		DeckView mesaJ1 = new DeckView(-1);
-		ScrollPane sdM1 = new ScrollPane();
-		sdM1.setPrefSize(1200, 250);
-		sdM1.setContent(mesaJ1);
-		grid3.add(sdM1, 0, 0);
+		// DeckView mesaJ1 = new DeckView(-1);
+		// ScrollPane sdM1 = new ScrollPane();
+		// sdM1.setPrefSize(1200, 250);
+		// sdM1.setContent(mesaJ1);
+		// grid3.add(sdM1, 0, 0);
 
-		PlacarView placar = new PlacarView();
-		grid3.add(placar, 0, 1);
+		// PlacarView placar = new PlacarView();
+		// grid3.add(placar, 0, 1);
 
 		Button butClean = new Button("Clean");
 		grid3.add(butClean, 1, 1);
 		butClean.setOnAction(e -> Game.getInstance().removeSelected());
 
-		DeckView mesaJ2 = new DeckView(-2);
-		ScrollPane sdM2 = new ScrollPane();
-		sdM2.setPrefSize(1200, 250);
-		sdM2.setContent(mesaJ2);
-		grid3.add(sdM2, 0, 2);
+
+		// DeckView mesaJ2 = new DeckView(-2);
+		// ScrollPane sdM2 = new ScrollPane();
+		// sdM2.setPrefSize(1200, 250);
+		// sdM2.setContent(mesaJ2);
+		// grid3.add(sdM2, 0, 2);
+
+
 
 		tab1.setContent(grid1);
         tab2.setContent(grid2);
@@ -146,8 +216,18 @@ public class GameWindow extends Application implements GameListener {
 				break;
 			case REMOVESEL:
 				// Esse evento não vem para cá
-			//case MUSTBUY:
-
+			case MUSTBUY:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("COMPRE");
+				alert.setHeaderText("Você precisa comprar uma carta para começar a jogada");
+				alert.setContentText("Compre uma carta com o botão \"Comprar\"");
+				alert.showAndWait();
+			case MUSTATTACK:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("ATAQUE");
+				alert.setHeaderText("Você precisa atacar para finalizar sua jogada!!!");
+				alert.setContentText("Ataque com o botão \"Atacar\"");
+				alert.showAndWait();
 			}
 			
 		}

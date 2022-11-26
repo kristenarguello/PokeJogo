@@ -11,65 +11,100 @@ import java.util.Stack;
 //import poo.modelo.GameEvent.Target;
 
 public class CardDeck {
-	private List<Card> deck;
+	private List<Card> cartas;
 	private List<GameListener> observers;
-
 	private Card selected;
-
-	private List<Card> ativo;
-	private List<Card> mao;
-	private List<Card> banco;
-	private List<Card> descarte;
+	private int tipo;
 	
+	public int getTipo() {
+		return tipo;
+	}
+
 	public Card getPokAtivo() {
-		int tam = ativo.size();
-		return ativo.get(tam+1);
+		int tam = cartas.size();
+		return cartas.get(tam+1);
 	}
 	
 	public Card getSelected() {
 		return selected;
 	}
 
-	public List<Card> getAtivo() {
-		return ativo;
+	public List<Card> getCards() {
+		return Collections.unmodifiableList(cartas);
 	}
 
-	public List<Card> getDeck() {
-		return deck;
+	public List<Card> getBaralho() {
+		return cartas;
 	}
-
-	public List<Card> getMao() {
-		return mao;
-	}
-
-	public List<Card> getBanco() {
-		return banco;
-	}
-
-	public List<Card> getDescarte() {
-		return descarte;
-	}
-
-
 
 	public static int energia = 0;
 	public static int pokemon = 0;
 	public static int treinador = 0;
 
-	
+	public CardDeck() {
+		cartas = new ArrayList<>(1);
+		Card c = new Card("imgVerso","imgVerso","verso");
+		c.setFaceUp();
+		cartas.add(c);
+		observers = new LinkedList<>();
+
+	}
+
+	public CardDeck(int nrCartas, CardDeck cd) {
+		cartas = new ArrayList<>();
+		tipo = nrCartas;
+		if (nrCartas == 2) {
+			Card c = cd.getBaralho().get(0);
+			cd.getBaralho().remove(0);//botar o banco como cd
+			cartas.add(c);
+		} else if (nrCartas == 5) {
+			for (int i=0;i<5;i++) {
+				Card c = cd.getBaralho().get(i);//botar o deck do jogador como cd
+				cartas.add(c);
+			}
+			for(int i=0;i<5;i++)
+				cd.getBaralho().remove(i);
+		} else if (nrCartas == 3) {//cd = mão
+			int cont = 0;
+			int pos = 0;
+			int quantidade = 0;
+			for (Card c : cd.getBaralho()) {
+				if (c instanceof Pokemon) {
+					Pokemon p = (Pokemon)c;
+					if (p.getGeracaoAnterior() == null) {
+						if (quantidade<2) {
+							cartas.add(p);
+							quantidade++;
+						}	
+					}
+				}
+				cont++;
+			}
+			cont =0;
+			pos = 0;
+			while(cont<5) {
+				if (cd.getBaralho().get(pos) instanceof Pokemon) {
+					Pokemon p = (Pokemon)cd.getBaralho().get(pos);
+					if (p.getGeracaoAnterior() == null) {
+						cd.getBaralho().remove(pos);
+					} 
+				} else 
+					pos++;
+				cont++;
+			}
+		} 
+		else if(nrCartas == 25){
+		}
+		observers = new LinkedList<>();
+	} 
 
 	public CardDeck(int nrCartas) {
-		deck = new ArrayList<>();
-		mao = new ArrayList<>();
-		banco = new ArrayList<>();
-		descarte = new ArrayList<>();
-		ativo = new ArrayList<>();
-
+		cartas = new ArrayList<>();
 
 		int totalCartas = 0;
 		ArrayList<Card> todas = new ArrayList<>();
 		todas.add(new Pokemon(20,70,Tipos.AGUA, "Squirtle",null,"squirtle","imgSquirtle"));
-		todas.add(new Pokemon(20,70,Tipos.PLANTA,"Bulbasaur",null,"bulbasaur","imbBulbasaur"));
+		todas.add(new Pokemon(20,70,Tipos.PLANTA,"Bulbasaur",null,"bulbasaur","imgBulbasaur"));
 		todas.add(new Pokemon(20,70,Tipos.FOGO,"Charmander",null,"charmander","imgCharmander"));
 		todas.add(new Pokemon(20,70,Tipos.NORMAL,"Eevee",null, "eevee","imgEevee"));
 		todas.add(new Pokemon(40,110,Tipos.NORMAL,"Snorlax",null,"snorlax","imgSnorlax"));
@@ -93,7 +128,7 @@ public class CardDeck {
 		Random r = new Random();
 		
 		for(int i=0;i<15;i++) {
-			deck.add(new Energia(10, "Energia", "energia", "imgEnergia"));
+			cartas.add(new Energia(10, "Energia", "energia", "imgEnergia"));
 		}
 		totalCartas += 15;
 		energia += 15;
@@ -101,23 +136,23 @@ public class CardDeck {
 		for(int i=0;i<4;i++) {
 			int selecao = r.nextInt(9);
 			Card c = todas.get(selecao);
-			deck.add(c);
+			cartas.add(c);
 			pokemon++;
 			if (c.getNome().equals("Squirtle")) {
-				deck.add(new Pokemon(50,90,Tipos.AGUA,"Wartortle","Squirtle","wartortle","imgWartortle"));
+				cartas.add(new Pokemon(50,90,Tipos.AGUA,"Wartortle","Squirtle","wartortle","imgWartortle"));
 				totalCartas++;
 				pokemon++;
 			} else if (c.getNome().equals("Bulbasaur")) {
-				deck.add(new Pokemon(50,100,Tipos.PLANTA,"Ivysaur","Bulbasaur","ivysaur","imgIvysaur"));
+				cartas.add(new Pokemon(50,100,Tipos.PLANTA,"Ivysaur","Bulbasaur","ivysaur","imgIvysaur"));
 				totalCartas++;
 				pokemon++;
 			} else if (c.getNome().equals("Charmander")) {
-				deck.add(new Pokemon(50, 90, Tipos.FOGO,"Charmeleon","Charmander","charmeleon","imgCharmeleon"));
+				cartas.add(new Pokemon(50, 90, Tipos.FOGO,"Charmeleon","Charmander","charmeleon","imgCharmeleon"));
 				totalCartas++;
 				pokemon++;
 			} else if (c.getNome().equals("Eevee")) {
 				int qual = r.nextInt(3);
-				deck.add(evolucaoEve.get(qual));
+				cartas.add(evolucaoEve.get(qual));
 				totalCartas++;
 				pokemon++;
 			}
@@ -127,66 +162,64 @@ public class CardDeck {
 		while (totalCartas<nrCartas) {
 			int qual = r.nextInt(6) + 9;
 			Card c = todas.get(qual);
-			deck.add(c);
+			cartas.add(c);
 			totalCartas++;
 			treinador++;
 		}
-		Collections.shuffle(deck);
+		Collections.shuffle(cartas);
 
 		List<Card> aux = new ArrayList<Card>();
-		for (int i=0;i<deck.size();i++) {
-			if (deck.get(i) instanceof Pokemon) {
-				Card c = deck.get(i);
+		for (int i=0;i<cartas.size();i++) {
+			if (cartas.get(i) instanceof Pokemon) {
+				Card c = cartas.get(i);
             	Pokemon p = (Pokemon)c;
 				if (p.getGeracaoAnterior()==null) {
-					deck.remove(c);
+					cartas.remove(c);
 					Stack<Card> pilha = new Stack<>();
-					pilha.addAll(deck);
+					pilha.addAll(cartas);
 					pilha.add(c);
 					aux = pilha;
 					break;
 				}
 			}
 		}
-		deck.clear();
+		cartas.clear();
         for (int i = aux.size() - 1;i>=0;i--) {
-            deck.add(aux.get(i));
+            cartas.add(aux.get(i));
         }
 		observers = new LinkedList<>();
 	}
 
-	public List<Card> getCards() {
-		return Collections.unmodifiableList(deck);
-	}
-
 	public int getNumberOfCards() {
-		return deck.size();
+		return cartas.size();
 	}
 
 	public void removeSel() {
-		if (ativo.size()==0) {
+		System.out.println("TESTE AQUI!!! CARDDECK -----------------------------");
+		if (selected == null) {
 			return;
 		}
-		if (Pokemon.morrer(descarte,ativo)) {
-			GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.REMOVESEL, "");
-			for (var observer : observers) {
-				observer.notify(gameEvent);
-			}
+		cartas.remove(selected);
+		selected = null;
+		GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.REMOVESEL, "");
+		for (var observer : observers) {
+			observer.notify(gameEvent);
 		}
 	}
 
 	public void addCard(Card card) {
 		System.out.println("add: "+ card);
-		deck.add(card);
+		cartas.add(card);
 		GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.SHOWTABLE, "");
 		for (var observer : observers) {
 			observer.notify(gameEvent);
 		}
 	}
 
-	public void addAtivo(Card card) {
-		ativo.add(card);
-	}
+	// public void addAtivo(Card card) {
+	// 	ativo.add(card);
+	// }
+	
 
 	public void addGameListener(GameListener listener) {
 		observers.add(listener);
@@ -202,47 +235,7 @@ public class CardDeck {
 		System.out.println("treinador: " + treinador);
 	}
 
-	public void inicio() {
-		for (int i=0;i<5;i++) {
-			Card c = deck.get(i);
-			mao.add(c);
-		}
-		for(int i=0;i<5;i++)
-			deck.remove(i);
-
-		printar(mao);
-		int cont = 0;
-		int pos = 0;
-		int quantidade = 0;
-		for (Card c : mao) {
-			if (c instanceof Pokemon) {
-				Pokemon p = (Pokemon)c;
-				if (p.getGeracaoAnterior() == null) {
-					if (quantidade<2) {
-						banco.add(p);
-						quantidade++;
-					}	
-				}
-			}
-			cont++;
-		}
-		cont =0;
-		pos = 0;
-		while(cont<5) {
-			if (mao.get(pos) instanceof Pokemon) {
-				Pokemon p = (Pokemon)mao.get(pos);
-				if (p.getGeracaoAnterior() == null) {
-					mao.remove(pos);
-				} 
-			} else 
-				pos++;
-			cont++;
-		}
-
-		Card c = banco.get(0);
-		banco.remove(0);
-		ativo.add(c);
-	}
+	
 
 	public void setSelectedCard(Card card) {
 		selected = card;

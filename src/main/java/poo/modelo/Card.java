@@ -47,4 +47,8 @@ public class Card {
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		pcs.removePropertyChangeListener(listener);
 	}
+
+	public void setFaceUp() {
+		faceUp = false;
+	}
 }

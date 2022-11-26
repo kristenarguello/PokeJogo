@@ -24,23 +24,27 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		jogador = nroJog;
 		selectedCard = null;
 
-		cDeck = null;
+		cDeck = null;//aqui diferente
 		if (jogador == 1) {
-			cDeck = Game.getInstance().getDeckJ1();
+			cDeck = Game.getInstance().getVerso();
 		} else if (jogador == 2) {
-			cDeck = Game.getInstance().getDeckJ1();
+			cDeck = Game.getInstance().getVerso();
 		} else if (jogador == 3) {
-			cDeck = Game.getInstance().getDeckJ1();
+			cDeck = Game.getInstance().getMaoJ1();
 	    } else if (jogador == 4) {
-			cDeck = Game.getInstance().getDeckJ1();
+			cDeck = Game.getInstance().getMaoJ2();
 		} else if (jogador == 5) {
-			cDeck = Game.getInstance().getDeckJ2();
+			cDeck = Game.getInstance().getAtivoJ1();
 		} else if (jogador == 6) {
-			cDeck = Game.getInstance().getDeckJ2();
+			cDeck = Game.getInstance().getAtivoJ2();
 		} else if (jogador == 7) {
-			cDeck = Game.getInstance().getDeckJ2();
+			cDeck = Game.getInstance().getVerso();
 		} else if (jogador == 8) {
-			cDeck = Game.getInstance().getDeckJ2();
+			cDeck = Game.getInstance().getVerso();
+		} else if (jogador == 9) {
+			cDeck = Game.getInstance().getBancoJ1();
+		} else if (jogador == 10) {
+			cDeck = Game.getInstance().getBancoJ2();
 		}
 
 		cDeck.addGameListener(this);
@@ -97,6 +101,6 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		CardView cv = event.getCardView();
 		selectedCard = cv.getCard();
 		cDeck.setSelectedCard(selectedCard);
-		Game.getInstance().outroPlayzao(cDeck);
+		Game.getInstance().play(cDeck);
 	}
 }
