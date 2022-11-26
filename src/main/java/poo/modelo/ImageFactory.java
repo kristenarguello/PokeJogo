@@ -39,7 +39,7 @@ public class ImageFactory {
 		case "imgTorkoal":
 			return ("/imagens/torkoal.png");
 		case "imgPocao":
-			return ("/imagens/pocao.png");
+			return ("/imagens/pocao.png"); //n aparece no jogo
 		case "imgSuper":
 			return ("/imagens/superPocao.png");
 		case "imgSubst":
@@ -49,7 +49,7 @@ public class ImageFactory {
 		case "imgRecupera":
 			return ("/imagens/recuperacaoEnergia.png");
 		case "imgSubstitu_energ":
-			return ("/imgens/substituicao-energia.png");
+			return ("/imagens/substituicao-energia.png");
 		case "imgVaporeon":
 			return ("/imagens/vaporeon.png");
 		case "imgFlareon":
@@ -71,13 +71,12 @@ public class ImageFactory {
 		}
 	}
 
-
 	public ImageView createImage(String imgId) {
 		Image img = images.get(imgId);
 		
 		if (img == null) {
 //			img = new Image(id2File(imgId));
-			img = new Image(getClass().getResourceAsStream(id2File(imgId)),300,150,true,true);
+			img = new Image(getClass().getResourceAsStream(id2File(imgId)),400,250,true,true);
 			images.put(imgId, img);
 		}
 

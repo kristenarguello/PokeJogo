@@ -12,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import poo.modelo.Game;
@@ -42,57 +43,45 @@ public class GameWindow extends Application implements GameListener {
         tabPane.getTabs().add(tab2);
         tabPane.getTabs().add(tab3);
 
-
+	
 		GridPane grid1 = new GridPane();
-		grid1.setAlignment(Pos.CENTER);
+		grid1.setAlignment(Pos.BASELINE_LEFT);
 		grid1.setHgap(10);
 		grid1.setVgap(10);
 		grid1.setPadding(new Insets(25, 25, 25, 25));
 
 		DeckView deckJ1 = new DeckView(1);
 		ScrollPane sd1 = new ScrollPane();
-		sd1.setPrefSize(1200, 250);
+		sd1.setPrefSize(100, 250);
 		sd1.setContent(deckJ1);
 		grid1.add(sd1, 0, 0);
 
-		// DeckView maoJ1 = new DeckView(3);
-		// ScrollPane sd3 = new ScrollPane();
-		// sd3.setPrefSize(1200, 250);
-		// sd3.setContent(maoJ1);
-		// grid1.add(sd3, 0, 0);
+		DeckView maoJ1 = new DeckView(3);
+		ScrollPane sd3 = new ScrollPane();
+		sd3.setPrefSize(1000, 250);
+		sd3.setContent(maoJ1);
+		grid1.add(sd3, 0, 1);
 
-		// DeckView ativoJ1 = new DeckView(5);
-		// ScrollPane sd5 = new ScrollPane();
-		// sd5.setPrefSize(1200, 250);
-		// sd5.setContent(ativoJ1);
-		// grid1.add(sd5, 0, 0);
+		DeckView descarteJ1 = new DeckView(7);
+		ScrollPane sd7 = new ScrollPane();
+		sd7.setPrefSize(100, 250);
+		sd7.setContent(descarteJ1);
+		grid1.add(sd7, 0, 2);
 
-		// DeckView descarteJ1 = new DeckView(7);
-		// ScrollPane sd7 = new ScrollPane();
-		// sd7.setPrefSize(1200, 250);
-		// sd7.setContent(descarteJ1);
-		// grid1.add(sd5, 0, 0);
-
-		// DeckView bancoJ1 = new DeckView(9);
-		// ScrollPane sd9 = new ScrollPane();
-		// sd9.setPrefSize(1200, 250);
-		// sd9.setContent(bancoJ1);
-		// grid1.add(sd5, 0, 0);
-
-		// Button butBuy1 = new Button("Comprar");
-		// grid1.add(butBuy1, 1, 1);
-		// butBuy1.setOnAction(e -> Game.getInstance().comprarCarta(1));
+		Button butBuy1 = new Button("Comprar");
+		grid1.add(butBuy1, 1, 0);
+		butBuy1.setOnAction(e -> Game.getInstance().comprarCarta(1));
 		
-		// Button butAtt = new Button("Atacar");
-		// grid1.add(butAtt, 1, 1);
-		// butBuy1.setOnAction(e -> Game.getInstance().atacar(1));
+		Button butAtt = new Button("Atacar");
+		grid1.add(butAtt, 2, 1);
+		butAtt.setOnAction(e -> Game.getInstance().atacar(1));
 
 
 //-------------------------------------------------------------------
 
 
 		GridPane grid2 = new GridPane();
-		grid2.setAlignment(Pos.CENTER);
+		grid2.setAlignment(Pos.BASELINE_LEFT);
 		grid2.setHgap(10);
 		grid2.setVgap(10);
 		grid2.setPadding(new Insets(25, 25, 25, 25));
@@ -100,15 +89,15 @@ public class GameWindow extends Application implements GameListener {
 		
 		DeckView deckJ2 = new DeckView(2);
 		ScrollPane sd2 = new ScrollPane();
-		sd2.setPrefSize(1200, 250);
+		sd2.setPrefSize(100, 250);
 		sd2.setContent(deckJ2);
-		grid2.add(sd2, 0, 2);
+		grid2.add(sd2, 0, 0);
 
-		// DeckView maoJ2 = new DeckView(4);
-		// ScrollPane sd4 = new ScrollPane();
-		// sd4.setPrefSize(1200, 250);
-		// sd4.setContent(maoJ2);
-		// grid2.add(sd4, 0, 0);
+		DeckView maoJ2 = new DeckView(4);
+		ScrollPane sd4 = new ScrollPane();
+		sd4.setPrefSize(1000, 250);
+		sd4.setContent(maoJ2);
+		grid2.add(sd4, 0, 1);
 
 		// DeckView ativoJ2 = new DeckView(6);
 		// ScrollPane sd6 = new ScrollPane();
@@ -116,11 +105,11 @@ public class GameWindow extends Application implements GameListener {
 		// sd6.setContent(ativoJ2);
 		// grid2.add(sd6, 0, 0);
 
-		// DeckView descarteJ2 = new DeckView(8);
-		// ScrollPane sd8 = new ScrollPane();
-		// sd8.setPrefSize(1200, 250);
-		// sd8.setContent(descarteJ2);
-		// grid2.add(sd8, 0, 0);
+		DeckView descarteJ2 = new DeckView(8);
+		ScrollPane sd8 = new ScrollPane();
+		sd8.setPrefSize(100, 250);
+		sd8.setContent(descarteJ2);
+		grid2.add(sd8, 0, 2);
 
 		// DeckView bancoJ2 = new DeckView(10);
 		// ScrollPane sd10 = new ScrollPane();
@@ -128,13 +117,13 @@ public class GameWindow extends Application implements GameListener {
 		// sd10.setContent(bancoJ2);
 		// grid2.add(sd10, 0, 0);
 
-		// Button butBuy2 = new Button("Comprar");
-		// grid2.add(butBuy2, 1, 1);
-		// butBuy2.setOnAction(e -> Game.getInstance().comprarCarta(2));
+		Button butBuy2 = new Button("Comprar");
+		grid2.add(butBuy2, 1, 0);
+		butBuy2.setOnAction(e -> Game.getInstance().comprarCarta(2));
 
-		// Button butAtt2 = new Button("Atacar");
-		// grid2.add(butAtt2, 1, 1);
-		// butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
+		Button butAtt2 = new Button("Atacar");
+		grid2.add(butAtt2, 2, 1);
+		butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
 
 	
 //-------------------------------------------------------------------
@@ -145,12 +134,6 @@ public class GameWindow extends Application implements GameListener {
 		grid3.setVgap(10);
 		grid3.setPadding(new Insets(25, 25, 25, 25));
 
-		// DeckView mesaJ1 = new DeckView(-1);
-		// ScrollPane sdM1 = new ScrollPane();
-		// sdM1.setPrefSize(1200, 250);
-		// sdM1.setContent(mesaJ1);
-		// grid3.add(sdM1, 0, 0);
-
 		// PlacarView placar = new PlacarView();
 		// grid3.add(placar, 0, 1);
 
@@ -158,13 +141,17 @@ public class GameWindow extends Application implements GameListener {
 		grid3.add(butClean, 1, 1);
 		butClean.setOnAction(e -> Game.getInstance().removeSelected());
 
+		DeckView ativoJ1 = new DeckView(5);
+		ScrollPane sd5 = new ScrollPane();
+		sd5.setPrefSize(1200, 250);
+		sd5.setContent(ativoJ1);
+		grid3.add(sd5, 0, 0);
 
-		// DeckView mesaJ2 = new DeckView(-2);
-		// ScrollPane sdM2 = new ScrollPane();
-		// sdM2.setPrefSize(1200, 250);
-		// sdM2.setContent(mesaJ2);
-		// grid3.add(sdM2, 0, 2);
-
+		DeckView bancoJ1 = new DeckView(9);
+		ScrollPane sd9 = new ScrollPane();
+		sd9.setPrefSize(1200, 250);
+		sd9.setContent(bancoJ1);
+		grid3.add(sd9, 1, 0);
 
 
 		tab1.setContent(grid1);

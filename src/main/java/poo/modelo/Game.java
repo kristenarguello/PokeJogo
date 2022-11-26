@@ -336,11 +336,11 @@ public class Game {
 		CardDeck aux;
 		CardDeck principal;
 		if (jogador == 1){ 
-			principal = deckJ1;
-			aux = deckJ2;
+			principal = ativoJ1;
+			aux = ativoJ2;
 		} else {
-			principal = deckJ2;
-			aux = deckJ1;
+			principal = ativoJ2;
+			aux = ativoJ1;
 		}
 		Pokemon.atacar((Pokemon)principal.getPokAtivo(),(Pokemon)aux.getPokAtivo());
 	}

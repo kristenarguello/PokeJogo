@@ -21,8 +21,9 @@ public class CardDeck {
 	}
 
 	public Card getPokAtivo() {
-		int tam = cartas.size();
-		return cartas.get(tam+1);
+		if (cartas.size()==2)
+			return cartas.get(1);
+		return cartas.get(0);
 	}
 	
 	public Card getSelected() {
