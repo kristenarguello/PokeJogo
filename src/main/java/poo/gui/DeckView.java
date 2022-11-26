@@ -56,10 +56,10 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 			cv.setCardViewObserver(this);
 			this.getChildren().add(cv);
 		} else {
-		for (Card card : cDeck.getCards()) {
-			CardView cv = new CardView(card);
-			cv.setCardViewObserver(this);
-			this.getChildren().add(cv);
+			for (Card card : cDeck.getCards()) {
+				CardView cv = new CardView(card);
+				cv.setCardViewObserver(this);
+				this.getChildren().add(cv);
 			}
 		}
 	}
@@ -75,6 +75,16 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		}
 	}
 
+	// private void removeCardView(Card c) {
+	// 	ObservableList<Node> cards = getChildren();
+	// 	for (int i = 0; i < cards.size(); i++) {
+	// 		CardView cv = (CardView) cards.get(i);
+	// 		if (cv.getCard() == c) {
+	// 			getChildren().remove(i);
+	// 		}
+	// 	}
+	// }
+
 	private void showDeck() {
 		//ObservableList<Node> cards = getChildren();
 		//cDeck.addGameListener(this);
@@ -85,7 +95,7 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		for (Card card : cDeck.getCards()) {
 			System.out.println("show>" + card);
 			CardView cv = new CardView(card);
-			//cv.setCardViewObserver(this);
+			cv.setCardViewObserver(this);
 			this.getChildren().add(cv);
 		}
 	}
@@ -102,6 +112,9 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		if (event.getAction() == GameEvent.Action.SHOWTABLE) {
 			showDeck();
 		}
+		if (event.getAction() == GameEvent.Action.ATTACK) {
+
+		} 
 	}
 
 	@Override

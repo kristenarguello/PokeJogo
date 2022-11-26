@@ -12,7 +12,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -71,11 +70,15 @@ public class GameWindow extends Application implements GameListener {
 
 		Button butBuy1 = new Button("Comprar");
 		grid1.add(butBuy1, 1, 0);
-		butBuy1.setOnAction(e -> Game.getInstance().comprarCarta(1));
+		butBuy1.setOnAction(e -> Game.getInstance().comprarCartaJ1());
 		
 		Button butAtt = new Button("Atacar");
 		grid1.add(butAtt, 2, 1);
 		butAtt.setOnAction(e -> Game.getInstance().atacar(1));
+
+		// Button skip1 = new Button("Pular");
+		// grid1.add(skip1, 2, 0);
+		// skip1.setOnAction(e -> Game.getInstance().pular());
 
 
 //-------------------------------------------------------------------
@@ -110,13 +113,17 @@ public class GameWindow extends Application implements GameListener {
 
 		
 
-		Button butBuy2 = new Button("Comprar");
+		Button butBuy2 = new Button("buy");
 		grid2.add(butBuy2, 1, 0);
-		butBuy2.setOnAction(e -> Game.getInstance().comprarCarta(2));
+		butBuy2.setOnAction(e -> Game.getInstance().comprarCartaJ2());
 
 		Button butAtt2 = new Button("Atacar");
 		grid2.add(butAtt2, 2, 1);
 		butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
+
+		// Button skip2 = new Button("Pular");
+		// grid2.add(skip2, 2, 0);
+		// skip2.setOnAction(e -> Game.getInstance().pular());
 
 	
 //-------------------------------------------------------------------
@@ -196,31 +203,53 @@ public class GameWindow extends Application implements GameListener {
 				break;
 			case ENDGAME:
 				String text = "Fim de Jogo !!\n";
-				// if (Game.getInstance().getPtsJ1() > Game.getInstance().getPtsJ2()) {
-				// 	text += "O jogador 1 ganhou !! :-)";
-				// } else {
-				// 	text += "O jogador 2 ganhou !! :-)";
-				// }
 				alert = new Alert(AlertType.WARNING);
 				alert.setTitle("Parabens !!");
 				alert.setHeaderText(null);
-				alert.setContentText(text);
+				alert.setContentText(text + eg.getArg());
 				alert.showAndWait();
 				break;
 			case REMOVESEL:
 				// Esse evento não vem para cá
+				break;
 			case MUSTBUY:
 				alert = new Alert(AlertType.WARNING);
 				alert.setTitle("COMPRE");
 				alert.setHeaderText("Você precisa comprar uma carta para começar a jogada");
 				alert.setContentText("Compre uma carta com o botão \"Comprar\"");
 				alert.showAndWait();
+				break;
 			case MUSTATTACK:
 				alert = new Alert(AlertType.WARNING);
 				alert.setTitle("ATAQUE");
 				alert.setHeaderText("Você precisa atacar para finalizar sua jogada!!!");
 				alert.setContentText("Ataque com o botão \"Atacar\"");
 				alert.showAndWait();
+				break;
+			case CONTINUE:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Atenção !!");
+				alert.setHeaderText("Você deseja realizar a operação seguinte?");
+				alert.setContentText("Operação: " + eg.getArg());
+				alert.showAndWait();
+				break;
+			case VAI:
+				//não faz nada
+				break;
+			case KEEPPLAYING:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Atenção !!");
+				alert.setHeaderText("O jogo continuará! Ninguém ganhou ainda");
+				alert.setContentText("Vez do JOGADOR " + eg.getArg());
+				alert.showAndWait();
+				break;
+			case TREINADORFEZ:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("Aviso");
+				alert.setHeaderText("A carta treinador recém acionada fez...");
+				alert.setContentText(eg.getArg());
+				alert.showAndWait();
+				break;
 			}
 			
 		}

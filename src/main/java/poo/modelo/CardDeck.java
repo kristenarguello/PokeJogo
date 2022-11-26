@@ -48,7 +48,6 @@ public class CardDeck {
 		c.setFaceUp();
 		cartas.add(c);
 		observers = new LinkedList<>();
-
 	}
 
 	public CardDeck(int nrCartas, CardDeck cd) {
@@ -74,7 +73,7 @@ public class CardDeck {
 					Pokemon p = (Pokemon)c;
 					if (p.getGeracaoAnterior() == null) {
 						if (quantidade<2) {
-							cartas.add(p);
+							cartas.add(c);
 							quantidade++;
 						}	
 					}
@@ -108,18 +107,18 @@ public class CardDeck {
 		todas.add(new Pokemon(20,70,Tipos.PLANTA,"Bulbasaur",null,"bulbasaur","imgBulbasaur"));
 		todas.add(new Pokemon(20,70,Tipos.FOGO,"Charmander",null,"charmander","imgCharmander"));
 		todas.add(new Pokemon(20,70,Tipos.NORMAL,"Eevee",null, "eevee","imgEevee"));
-		todas.add(new Pokemon(40,110,Tipos.NORMAL,"Snorlax",null,"snorlax","imgSnorlax"));
-		todas.add(new Pokemon(40,110,Tipos.NORMAL,"Chansey",null,"chansey","imgChansey"));
+		todas.add(new Pokemon(50,110,Tipos.NORMAL,"Snorlax",null,"snorlax","imgSnorlax"));
+		todas.add(new Pokemon(50,110,Tipos.NORMAL,"Chansey",null,"chansey","imgChansey"));
 		todas.add(new Pokemon(50,110,Tipos.AGUA,"Alomomola",null,"alomomola","imgAlomomola"));
 		todas.add(new Pokemon(50, 110, Tipos.PLANTA,"Maractus",null,"maractus","imgMaractus"));
 		todas.add(new Pokemon(50,100,Tipos.FOGO,"Torkoal",null,"torkoal","imgTorkoal"));
 
-		todas.add(new Treinador("pocao","imgPocao","Poção",30));
-		todas.add(new Treinador("super_pocao","imgSuper","Super Poção",60));
-		todas.add(new Treinador("substituicao","imgSubst","Substituição",Acao.POKEBOLA));
-		todas.add(new Treinador("reviver","imgRev","Reviver",Acao.POKEBOLA));
-		todas.add(new Treinador("recupera","imgRecupera","Recuperação de Energia",Acao.ENERGIA));
-		todas.add(new Treinador("substitu_energ","imgSubstitu_energ","Substituição de Energia",Acao.ENERGIA));
+		todas.add(new Treinador("pocao","imgPocao","Poção",30,"Curou 30 de vida do pokemon ativo"));
+		todas.add(new Treinador("super_pocao","imgSuper","Super Poção",60,"Curou 60 de vida do pokemon ativo"));
+		todas.add(new Treinador("substituicao","imgSubst","Substituição",Acao.POKEBOLA, "Trocou o pokemon ativo por um do seu banco!"));
+		todas.add(new Treinador("reviver","imgRev","Reviver",Acao.POKEBOLA, "Colocou um pokemon básico da pilha de descarte no banco!"));
+		todas.add(new Treinador("recupera","imgRecupera","Recuperação de Energia",Acao.ENERGIA, "Colocou até 3 cartas de energia na sua mão!"));
+		todas.add(new Treinador("substitu_energ","imgSubstitu_energ","Substituição de Energia",Acao.ENERGIA, "Moveu energia de 1 pokemon seu para outro!"));
 
 
 		ArrayList<Card> evolucaoEve = new ArrayList<>();

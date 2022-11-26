@@ -16,12 +16,11 @@ public class Energia extends Card {
 
     //adicionar energia no pokemon
     public static void setEnergia(Pokemon pokemon, List<Card> descarte, List<Card> mao) {
-        pokemon.setEnergia(pokemon.getEnergia() + 10);
+        pokemon.setEnergia(10);
         for (Card c : mao) {
             if (c instanceof Energia) {
                 descarte.add(c);
-                mao.remove(c);
-                break; //se der errado separar mao.remove
+                break; 
             }
         }
     }

@@ -65,8 +65,8 @@ public class Pokemon extends Card {
                     diferenca = 0.5;
                 }
             }
-            atacante.setEnergia(atacante.getEnergiaGasta());
-            atacado.setPs(atacado.getPs() - (int)(atacado.getValorAtaque() * diferenca));
+            atacante.gastaEnergia(atacante.getEnergiaGasta());
+            atacado.setPs(atacado.getPs() - ((int)(atacante.getValorAtaque() * diferenca)));
         } else {
             //mensagem que nem a da vez, dizendo que nao tem energia pra atacar
             //dizer quanto de energia tem e quaanto precisa (usar os getters)
@@ -79,8 +79,9 @@ public class Pokemon extends Card {
             Card a = ativo.get(0);
             Pokemon p = (Pokemon)a;
             if (p.getPs() <= 0) {
-                p.setEnergia();
-                descarte.add(p);
+                p.setEnergiaComeco();
+                a = p;
+                descarte.add(a);
                 ativo.clear();   
                 return true;
             }
@@ -92,7 +93,7 @@ public class Pokemon extends Card {
                         if (p.getPs() <= 0) {
                             for (Card a : ativo) {
                                 Pokemon b = (Pokemon)a;
-                                b.setEnergia();
+                                b.setEnergiaComeco();
                                 descarte.add(b);
                                 ativo.clear();   
                                 return true;
@@ -141,12 +142,16 @@ public class Pokemon extends Card {
         return energia;
     }
 
-    public void setEnergia(int energia) {
+    public void gastaEnergia(int energia) {
         this.energia -= energia;
     }
 
-    public void setEnergia() {
+    public void setEnergiaComeco() {
         this.energia = 10;
+    }
+
+    public void setEnergia(int energia) {
+        this.energia += energia;
     }
 
     public int getEnergiaGasta() {
