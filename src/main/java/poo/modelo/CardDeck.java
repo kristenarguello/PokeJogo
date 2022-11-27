@@ -116,7 +116,7 @@ public class CardDeck {
 		todas.add(new Treinador("pocao","imgPocao","Poção",30,"Curou 30 de vida do pokemon ativo"));
 		todas.add(new Treinador("super_pocao","imgSuper","Super Poção",60,"Curou 60 de vida do pokemon ativo"));
 		todas.add(new Treinador("substituicao","imgSubst","Substituição",Acao.POKEBOLA, "Trocou o pokemon ativo por um do seu banco!"));
-		todas.add(new Treinador("reviver","imgRev","Reviver",Acao.POKEBOLA, "Colocou um pokemon básico da pilha de descarte no banco!"));
+		todas.add(new Treinador("reviver","imgRev","Reviver",Acao.POKEBOLA, "Colocou um pokemon básico da pilha de descarte na sua mão!"));
 		todas.add(new Treinador("recupera","imgRecupera","Recuperação de Energia",Acao.ENERGIA, "Colocou até 3 cartas de energia na sua mão!"));
 		todas.add(new Treinador("substitu_energ","imgSubstitu_energ","Substituição de Energia",Acao.ENERGIA, "Moveu energia de 1 pokemon seu para outro!"));
 

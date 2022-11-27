@@ -58,6 +58,7 @@ public class Game {
 	public void play(CardDeck deckAcionado) {
 		GameEvent gameEvent = null;
 
+		
 		// jogador compra uma carta
 		if (player == 1 || player == 8) {
 			System.out.println("player>>>> " + player);
@@ -86,8 +87,16 @@ public class Game {
 			return;
 		}
 
+		if (deckAcionado == verso) {
+			nextPlayer();
+			System.out.println("player>>> " + player);
+			return;
+		}
+
+		
+
 		// jogador coloca algum pokemon basico para a reserva
-		if (deckAcionado == verso || deckAcionado == maoJ1) {
+		if (deckAcionado == maoJ1) {
 			if (player == 2) {
 				System.out.println("n == 2 --------------");
 				// testar se pode fazer
@@ -118,6 +127,7 @@ public class Game {
 								for (var observer : observers) {
 									observer.notify(gameEvent);
 								}
+								gameEvent = null;
 								System.out.println("banco lotado");
 								return;
 							}
@@ -248,7 +258,7 @@ public class Game {
 
 							maoJ1.removeSel();
 							gameEvent = null;
-							
+
 						} else {
 							System.out.println("carta errada, passou direto");
 						}
@@ -266,6 +276,7 @@ public class Game {
 					}
 				}
 				nextPlayer();
+				gameEvent = null;
 				System.out.println("player>>>" + player);
 				for (var observer : observers) {
 					observer.notify(gameEvent);
@@ -273,14 +284,14 @@ public class Game {
 				// --------------------------------------------------------------------------------------------------------------
 			} else if (player != 2 & player != 3 && player != 4 && player != 5) {
 				System.out.println("jogador errado");
-				gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "1");
+				gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "2");
 				for (var observer : observers) {
 					observer.notify(gameEvent);
 				}
 				return;
 			}
 			// =======================================================================================================================
-		} else if (deckAcionado == verso || deckAcionado == maoJ2) {
+		} else if (deckAcionado == maoJ2) {
 			if (player == 9) {
 				System.out.println("n == 9 --------------");
 				// testar se pode fazer
@@ -350,7 +361,7 @@ public class Game {
 								if (p.getGeracaoAnterior() != null) {
 									compativel = ((Pokemon) deckAcionado.getSelected())
 											.evoluir((Pokemon) deckAcionado.getSelected(), ativoJ2);
-											
+
 									deckAcionado.mostraCartas();
 									ativoJ2.mostraCartas();
 
@@ -363,8 +374,8 @@ public class Game {
 										for (var observer : observers) {
 											observer.notify(gameEvent);
 										}
-										System.out.println("evoluiu");
 									}
+									System.out.println("evoluiu");
 								} else {
 									System.out.println("deck errado");
 								}
@@ -449,7 +460,7 @@ public class Game {
 				// --------------------------------------------------------------------------------------------------------------
 			} else if (player != 9 && player != 10 && player != 11 && player != 12) {
 				System.out.println("jogador errado");
-				gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "2");
+				gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.INVPLAY, "1");
 				for (var observer : observers) {
 					observer.notify(gameEvent);
 				}
@@ -457,8 +468,6 @@ public class Game {
 			}
 		}
 	}
-
-	
 
 	public void confereMorrer() {
 		System.out.println("player>>> " + player);
@@ -474,32 +483,33 @@ public class Game {
 				descarteJ1.mostraCartas();
 				ativoJ1.mostraCartas();
 			} else {
-				descarteJ2.mostraCartas();	
+				descarteJ2.mostraCartas();
 				ativoJ2.mostraCartas();
 			}
-			
+
 		}
 
 	}
 
-	// Acionada pelo botao de limpar
-	public void removeSelected() {
-		GameEvent gameEvent = null;
-		if (player != 14) {
-			return;
-		}
-		if (ganhador != 0) {
-			gameEvent = new GameEvent(this, GameEvent.Target.GWIN, GameEvent.Action.ENDGAME, "");
-			for (var observer : observers) {
-				observer.notify(gameEvent);
-			}
-		}
+	// // Acionada pelo botao de limpar
+	// public void removeSelected() {
+	// GameEvent gameEvent = null;
+	// if (player != 14) {
+	// return;
+	// }
+	// if (ganhador != 0) {
+	// gameEvent = new GameEvent(this, GameEvent.Target.GWIN,
+	// GameEvent.Action.ENDGAME, "");
+	// for (var observer : observers) {
+	// observer.notify(gameEvent);
+	// }
+	// }
 
-		deckJ1.removeSel();
-		deckJ2.removeSel();
+	// deckJ1.removeSel();
+	// deckJ2.removeSel();
 
-		nextPlayer();
-	}
+	// nextPlayer();
+	// }
 
 	// acionado pelo botao de comprar
 	public void comprarCartaJ1() {
@@ -654,6 +664,8 @@ public class Game {
 					if (c instanceof Pokemon) {
 						ativoJ1.addCard(c);
 						bancoJ1.getBaralho().remove(pos);
+						((Pokemon) c).setEnergiaComeco();
+						((Pokemon) c).setPs(((Pokemon) c).getVidaMaxima());
 						break;
 					}
 					pos++;

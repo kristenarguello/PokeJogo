@@ -44,13 +44,13 @@ public class VidaView extends GridPane implements GameListener {
 		if (Game.getInstance().getAtivoJ1().getCards().size()==0) {
 			j1.setText("morreu");
 		} else {
-			j1.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getPs());
+			j1.setText("vida -> " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getPs());
 		}
 		
 		if (Game.getInstance().getAtivoJ2().getCards().size()==0) {
 			j2.setText("morreu");
 		} else {
-			j2.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getPs());
+			j2.setText("vida -> " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getPs());
 		}
 	}
 }

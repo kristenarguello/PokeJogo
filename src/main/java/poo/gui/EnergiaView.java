@@ -44,13 +44,13 @@ public class EnergiaView extends GridPane implements GameListener {
 		if (Game.getInstance().getAtivoJ1().getCards().size()==0) {
 			j1.setText("morreu");
 		} else {
-			j1.setText("energia - " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getEnergia());
+			j1.setText("energia -> " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getEnergia());
 		}
 		
 		if (Game.getInstance().getAtivoJ2().getCards().size()==0) {
 			j2.setText("morreu");
 		} else {
-			j2.setText("energia - " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getEnergia());
+			j2.setText("energia -> " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getEnergia());
 		}
 
 	}

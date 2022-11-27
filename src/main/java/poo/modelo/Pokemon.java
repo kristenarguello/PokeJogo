@@ -13,6 +13,8 @@ public class Pokemon extends Card {
     private Tipos tipo;
     private int energia;
 
+  
+
     public Pokemon(int valorAtaque, int ps, Tipos tipo, String nome, String geracaoAnterior, String anId, String anImageId) {
         super(anId, anImageId,nome);
         this.valorAtaque = valorAtaque;
@@ -23,7 +25,7 @@ public class Pokemon extends Card {
         evoluido = false;
         energia = 10;
 
-        if(geracaoAnterior==null) {
+        if(valorAtaque<50) {
             energiaGasta = 10;
         } else {
             energiaGasta = 20;
@@ -31,9 +33,9 @@ public class Pokemon extends Card {
     }
 
     //aplicar evolucao
-    public boolean evoluir(Pokemon evolucao, CardDeck ativo) {//chama a partir do basico 
-        if (getNome().equals(evolucao.getGeracaoAnterior())) {
-            ativo.addCard(evolucao);
+    public boolean evoluir( Card c, CardDeck ativo) {//chama a partir da evolucao
+        if (getGeracaoAnterior().equals(ativo.getBaralho().get(0).getNome())) {
+            ativo.addCard(c);
             return true;
         } else {
             System.out.println("nao é compativel");
@@ -79,6 +81,7 @@ public class Pokemon extends Card {
             Pokemon p = (Pokemon)a;
             if (p.getPs() <= 0) {
                 p.setEnergiaComeco();
+                p.setPs(p.getVidaMaxima());
                 a = p;
                 descarte.getBaralho().add(a);
                 ativo.getBaralho().clear();   
@@ -94,6 +97,7 @@ public class Pokemon extends Card {
                             for (Card a : ativo.getCards()) {
                                 Pokemon b = (Pokemon)a;
                                 b.setEnergiaComeco();
+                                b.setPs(b.getVidaMaxima());
                                 a = b;
                                 descarte.getBaralho().add(b);
                                 ativo.getBaralho().clear();  

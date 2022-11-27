@@ -93,9 +93,11 @@ public class Treinador extends Card {
                         banco.getBaralho().add(p);
                 }
             }
-            banco.getBaralho().remove(null);
+            banco.getBaralho().remove(0);
             ativo.getBaralho().clear();
             ativo.getBaralho().add(c);
+            ((Pokemon)c).setPs(((Pokemon)c).getVidaMaxima());
+            ((Pokemon)c).setEnergiaComeco();
         }
     }
 

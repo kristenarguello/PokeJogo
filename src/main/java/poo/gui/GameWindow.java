@@ -29,7 +29,7 @@ public class GameWindow extends Application implements GameListener {
 	public void start(Stage primaryStage) {
 		Game.getInstance().addGameListener(this);
 
-		primaryStage.setTitle("Batalha de Cartas");
+		primaryStage.setTitle("PokeJogo");
 
 		Group root = new Group();
 
@@ -38,7 +38,6 @@ public class GameWindow extends Application implements GameListener {
 		Tab tab1 = new Tab("Jogador 1");
 		Tab tab2 = new Tab("Jogador 2");
 		Tab tab3 = new Tab("Mesa");
-		// Tab tab4 = new Tab("Mesa Jogador 2");
 
 		tabPane.getTabs().add(tab1);
 		tabPane.getTabs().add(tab2);
@@ -133,9 +132,9 @@ public class GameWindow extends Application implements GameListener {
 		// PlacarView placar = new PlacarView();
 		// grid3.add(placar, 0, 1);
 
-		Button butClean = new Button("Clean");
-		grid3.add(butClean, 1, 1);
-		butClean.setOnAction(e -> Game.getInstance().removeSelected());
+		// Button butClean = new Button("Clean");
+		// grid3.add(butClean, 1, 1);
+		// butClean.setOnAction(e -> Game.getInstance().removeSelected());
 
 		DeckView ativoJ1 = new DeckView(5);
 		ScrollPane sd5 = new ScrollPane();
@@ -167,8 +166,18 @@ public class GameWindow extends Application implements GameListener {
 		VidaView placarVida = new VidaView();
 		grid3.add(placarVida, 1, 2);
 
-		TextArea regras = new TextArea("Regras: "
-				+ "frase aleatoria so pra ver se aparece.\nJogador 1 é o de cima e o Jogador 2 é o de baixo");
+		TextArea regras = new TextArea("=-=-=-=-REGRAS-=-=-=-=" +
+										"\nJogador 1 = cima " +
+										"\nJogador 2 = baixo" +
+										"\nCaso seu pokemon esteja evoluído, considere a segunda carta ativa." + 
+										"\n\nConfira a ordem de jogada para não se perder: " +
+										"\n1- Compre uma carta;" + 
+										"\n2- Coloque um pokemon básico no banco (clique na carta virada para baixo para pular);" + 
+										"\n3- Escolha uma evolução para seu pokemon ativo (clique na carta virada para baixo para pular);" +
+										"\n4- Aplique uma carta de energia (clique na carta virada para baixo para pular);" +
+										"\n5- Escolha uma carta de treinador para utilizar (clique na carta virada para baixo para pular);" + 
+										"\n6- Ataque;" + 
+										"\n7- Finalize sua rodada.");
 		regras.setPrefWidth(225);
 		regras.setPrefHeight(275);
 		regras.setWrapText(true);
