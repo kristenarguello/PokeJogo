@@ -111,7 +111,7 @@ public class CardDeck {
 		todas.add(new Pokemon(50,110,Tipos.NORMAL,"Chansey",null,"chansey","imgChansey"));
 		todas.add(new Pokemon(50,110,Tipos.AGUA,"Alomomola",null,"alomomola","imgAlomomola"));
 		todas.add(new Pokemon(50, 110, Tipos.PLANTA,"Maractus",null,"maractus","imgMaractus"));
-		todas.add(new Pokemon(50,100,Tipos.FOGO,"Torkoal",null,"torkoal","imgTorkoal"));
+		todas.add(new Pokemon(50,110,Tipos.FOGO,"Torkoal",null,"torkoal","imgTorkoal"));
 
 		todas.add(new Treinador("pocao","imgPocao","Poção",30,"Curou 30 de vida do pokemon ativo"));
 		todas.add(new Treinador("super_pocao","imgSuper","Super Poção",60,"Curou 60 de vida do pokemon ativo"));

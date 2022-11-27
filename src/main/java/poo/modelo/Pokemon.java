@@ -1,6 +1,6 @@
 package poo.modelo;
 
-import java.util.List;
+//import java.util.List;
 
 public class Pokemon extends Card {
 
@@ -31,12 +31,13 @@ public class Pokemon extends Card {
     }
 
     //aplicar evolucao
-    public boolean evoluir(Pokemon evolucao, List<Card> ativo) {//chama a partir do basico 
+    public boolean evoluir(Pokemon evolucao, CardDeck ativo) {//chama a partir do basico 
         if (getNome().equals(evolucao.getGeracaoAnterior())) {
-            ativo.add(evolucao);
+            ativo.addCard(evolucao);
             return true;
         } else {
             //faz a mensagenzinha:
+            System.out.println("nao é compativel");
             //"Evolução não compatível! Tente com outra carta numa próxima rodada."
             return false;
         }
@@ -74,36 +75,43 @@ public class Pokemon extends Card {
     }
 
     //morre
-    public static boolean morrer(List<Card> descarte, List<Card> ativo) {
-        if (ativo.size()==1) {
-            Card a = ativo.get(0);
+    public static boolean morrer(CardDeck descarte, CardDeck ativo) {
+        if (ativo.getCards().size()==1) {
+            Card a = ativo.getBaralho().get(0);
             Pokemon p = (Pokemon)a;
             if (p.getPs() <= 0) {
                 p.setEnergiaComeco();
                 a = p;
-                descarte.add(a);
-                ativo.clear();   
+                descarte.getBaralho().add(a);
+                ativo.getBaralho().clear();   
+                System.out.println("entrou no que tem tam 1, e apagou o ativo");
                 return true;
             }
-        } else {
-            for (Card c : ativo) {
+        } else if (ativo.getCards().size()==2) {
+            for (Card c : ativo.getCards()) {
                 if (c instanceof Pokemon) {
                     Pokemon p = (Pokemon)c;
-                    if (!p.getGeracaoAnterior().equals(null)) {
+                    if (!(p.getGeracaoAnterior() == null)) {
                         if (p.getPs() <= 0) {
-                            for (Card a : ativo) {
+                            for (Card a : ativo.getCards()) {
                                 Pokemon b = (Pokemon)a;
                                 b.setEnergiaComeco();
-                                descarte.add(b);
-                                ativo.clear();   
+                                a = b;
+                                descarte.getBaralho().add(b);
+                                ativo.getBaralho().clear();  
+                                System.out.println("entrou no que tem tam 2, e apagou o ativo"); 
                                 return true;
                             }
                         }
                     }
                 }
             }
-        }     
-        return false;
+        } else {
+            System.out.println("deu ruim");
+        }  
+        System.out.println("entrou no tamanho dos ativos mas não morreu nenhum");
+        return false;  
+        
     }
 
     public int getValorAtaque() {

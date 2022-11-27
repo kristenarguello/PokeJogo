@@ -24,14 +24,14 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		jogador = nroJog;
 		selectedCard = null;
 
-		cDeck = null;//aqui diferente
+		cDeck = null;// aqui diferente
 		if (jogador == 1) {
 			cDeck = Game.getInstance().getVerso();
 		} else if (jogador == 2) {
 			cDeck = Game.getInstance().getVerso();
 		} else if (jogador == 3) {
 			cDeck = Game.getInstance().getMaoJ1();
-	    } else if (jogador == 4) {
+		} else if (jogador == 4) {
 			cDeck = Game.getInstance().getMaoJ2();
 		} else if (jogador == 5) {
 			cDeck = Game.getInstance().getAtivoJ1();
@@ -49,10 +49,8 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 
 		cDeck.addGameListener(this);
 
-		
-
 		if (jogador == 5 || jogador == 6) {
-			CardView cv = new CardView(cDeck.getCards().get(cDeck.getCards().size()-1));
+			CardView cv = new CardView(cDeck.getCards().get(cDeck.getCards().size() - 1));
 			cv.setCardViewObserver(this);
 			this.getChildren().add(cv);
 		} else {
@@ -76,33 +74,40 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 	}
 
 	// private void removeCardView(Card c) {
-	// 	ObservableList<Node> cards = getChildren();
-	// 	for (int i = 0; i < cards.size(); i++) {
-	// 		CardView cv = (CardView) cards.get(i);
-	// 		if (cv.getCard() == c) {
-	// 			getChildren().remove(i);
-	// 		}
-	// 	}
+	// ObservableList<Node> cards = getChildren();
+	// for (int i = 0; i < cards.size(); i++) {
+	// CardView cv = (CardView) cards.get(i);
+	// if (cv.getCard() == c) {
+	// getChildren().remove(i);
+	// }
+	// }
 	// }
 
 	private void showDeck() {
-		//ObservableList<Node> cards = getChildren();
-		//cDeck.addGameListener(this);
+		// ObservableList<Node> cards = getChildren();
+		// cDeck.addGameListener(this);
 
 		this.getChildren().clear();
 
 		System.out.println("m1.len>" + cDeck.getNumberOfCards());
-		for (Card card : cDeck.getCards()) {
-			System.out.println("show>" + card);
-			CardView cv = new CardView(card);
+		for (int i=0; i<cDeck.getCards().size();i++) {
+			System.out.println("show>" + cDeck.getBaralho().get(i));
+			CardView cv = new CardView(cDeck.getBaralho().get(i));
 			cv.setCardViewObserver(this);
 			this.getChildren().add(cv);
 		}
+
+		// for (Card card : cDeck.getCards()) {
+		// System.out.println("show>" + card);
+		// CardView cv = new CardView(card);
+		// cv.setCardViewObserver(this);
+		// this.getChildren().add(cv);
+		// }
 	}
 
 	@Override
 	public void notify(GameEvent event) {
-		System.out.println("ev: "+ event);
+		System.out.println("ev: " + event);
 		if (event.getTarget() != GameEvent.Target.DECK) {
 			return;
 		}
@@ -114,7 +119,7 @@ public class DeckView extends HBox implements CardViewListener, GameListener {
 		}
 		if (event.getAction() == GameEvent.Action.ATTACK) {
 
-		} 
+		}
 	}
 
 	@Override

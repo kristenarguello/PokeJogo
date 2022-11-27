@@ -60,7 +60,7 @@ public class Treinador extends Card {
                 for (Card c : descarte) {
                     if (c instanceof Pokemon) {
                         Pokemon a = (Pokemon) c;
-                        if (a.getGeracaoAnterior().equals(null)) {
+                        if (a.getGeracaoAnterior()!=null) {
                             banco.addCard(c);
                             descarte.remove(c);
                             break;
@@ -85,7 +85,7 @@ public class Treinador extends Card {
             for (Card card : ativo.getBaralho()) {
                 if (card instanceof Pokemon) {
                     Pokemon p = (Pokemon) card;
-                    if (!p.getGeracaoAnterior().equals(null)) {
+                    if (p.getGeracaoAnterior()!=null) {
                         mao.getBaralho().add(p);
                     } else
                         banco.getBaralho().add(p);
@@ -144,9 +144,9 @@ public class Treinador extends Card {
                 }
             }
 
-            int aux = ativo.getEnergia();
+            //int aux = ativo.getEnergia();
             ativo.setEnergia(maiorEnergia.getEnergia());
-            maiorEnergia.setEnergia(aux);
+            //maiorEnergia.setEnergia(aux);
         } else {
             // mensagem nada no banco
         }

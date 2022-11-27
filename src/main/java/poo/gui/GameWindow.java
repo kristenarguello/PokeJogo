@@ -1,7 +1,7 @@
 package poo.gui;
 
 import javafx.application.Application;
-import javafx.collections.ObservableList;
+//import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -73,13 +73,14 @@ public class GameWindow extends Application implements GameListener {
 		butBuy1.setOnAction(e -> Game.getInstance().comprarCartaJ1());
 		
 		Button butAtt = new Button("Atacar");
-		grid1.add(butAtt, 2, 1);
+		grid1.add(butAtt, 2, 0);
 		butAtt.setOnAction(e -> Game.getInstance().atacar(1));
 
-		// Button skip1 = new Button("Pular");
-		// grid1.add(skip1, 2, 0);
-		// skip1.setOnAction(e -> Game.getInstance().pular());
+		Button confirm2 = new Button("Finalizar Jogada");
+		grid1.add(confirm2, 1,1);
+		confirm2.setOnAction(e -> Game.getInstance().confirmar(1));
 
+		
 
 //-------------------------------------------------------------------
 
@@ -103,23 +104,24 @@ public class GameWindow extends Application implements GameListener {
 		sd4.setContent(maoJ2);
 		grid2.add(sd4, 0, 1);
 
-		
-
 		DeckView descarteJ2 = new DeckView(8);
 		ScrollPane sd8 = new ScrollPane();
 		sd8.setPrefSize(100, 250);
 		sd8.setContent(descarteJ2);
 		grid2.add(sd8, 0, 2);
 
-		
-
-		Button butBuy2 = new Button("buy");
+		Button butBuy2 = new Button("Comprar");
 		grid2.add(butBuy2, 1, 0);
 		butBuy2.setOnAction(e -> Game.getInstance().comprarCartaJ2());
 
 		Button butAtt2 = new Button("Atacar");
-		grid2.add(butAtt2, 2, 1);
+		grid2.add(butAtt2, 2, 0);
 		butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
+
+		Button confirm1 = new Button("Finalizar Jogada");
+		grid2.add(confirm1, 1,1);
+		confirm1.setOnAction(e -> Game.getInstance().confirmar(2));
+
 
 		// Button skip2 = new Button("Pular");
 		// grid2.add(skip2, 2, 0);
@@ -143,28 +145,33 @@ public class GameWindow extends Application implements GameListener {
 
 		DeckView ativoJ1 = new DeckView(5);
 		ScrollPane sd5 = new ScrollPane();
-		sd5.setPrefSize(1200, 250);
+		sd5.setPrefSize(250, 275);
 		sd5.setContent(ativoJ1);
 		grid3.add(sd5, 0, 0);
 
 		DeckView bancoJ1 = new DeckView(9);
 		ScrollPane sd9 = new ScrollPane();
-		sd9.setPrefSize(1200, 250);
+		sd9.setPrefSize(650, 275);
 		sd9.setContent(bancoJ1);
 		grid3.add(sd9, 1, 0);
 
 		DeckView ativoJ2 = new DeckView(6);
 		ScrollPane sd6 = new ScrollPane();
-		sd6.setPrefSize(1200, 250);
+		sd6.setPrefSize(225, 275);
 		sd6.setContent(ativoJ2);
 		grid3.add(sd6, 0, 1);
 
 		DeckView bancoJ2 = new DeckView(10);
 		ScrollPane sd10 = new ScrollPane();
-		sd10.setPrefSize(1200, 250);
+		sd10.setPrefSize(625, 275);
 		sd10.setContent(bancoJ2);
 		grid3.add(sd10, 1, 1);
 
+		EnergiaView placarEnergia = new EnergiaView();
+		grid3.add(placarEnergia, 0, 2);
+
+		VidaView placarVida = new VidaView();
+		grid3.add(placarVida, 1,2);
 
 		tab1.setContent(grid1);
         tab2.setContent(grid2);
@@ -204,9 +211,9 @@ public class GameWindow extends Application implements GameListener {
 			case ENDGAME:
 				String text = "Fim de Jogo !!\n";
 				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Parabens !!");
-				alert.setHeaderText(null);
-				alert.setContentText(text + eg.getArg());
+				alert.setTitle("PARABENS");
+				alert.setHeaderText(text);
+				alert.setContentText("O jogador " + eg.getArg() + " ganhou o jogo!!!");
 				alert.showAndWait();
 				break;
 			case REMOVESEL:
@@ -249,6 +256,19 @@ public class GameWindow extends Application implements GameListener {
 				alert.setHeaderText("A carta treinador recém acionada fez...");
 				alert.setContentText(eg.getArg());
 				alert.showAndWait();
+				break;
+			case MUSTCONFIRM:
+				alert = new Alert(AlertType.WARNING);
+				alert.setTitle("CONFIRME");
+				alert.setHeaderText("Finalize sua jogada!");
+				alert.setContentText("Clique no botão \"Finalizar Jogada\" para conferir se nenhum pokemón já foi derrotado!");
+				alert.showAndWait();
+				break;
+			case ATTACK:
+				//nao vem pra ca
+				break;
+			case SHOWTABLE:
+				//nao vem pra ca
 				break;
 			}
 			
