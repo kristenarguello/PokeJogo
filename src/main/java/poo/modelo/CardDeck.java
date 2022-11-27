@@ -216,6 +216,8 @@ public class CardDeck {
 		}
 	}
 
+	
+
 	// public void addAtivo(Card card) {
 	// 	ativo.add(card);
 	// }
@@ -235,7 +237,12 @@ public class CardDeck {
 		System.out.println("treinador: " + treinador);
 	}
 
-	
+	public void mostraCartas() {
+		GameEvent gameEvent = new GameEvent(this, GameEvent.Target.DECK, GameEvent.Action.SHOWTABLE, "");
+		for (var observer : observers) {
+			observer.notify(gameEvent);
+		}
+	}
 
 	public void setSelectedCard(Card card) {
 		selected = card;

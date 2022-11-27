@@ -33,8 +33,8 @@ public class VidaView extends GridPane implements GameListener {
 		// 	j1.setText("energia - " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getEnergia());
 		// 	j2.setText("energia - " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getEnergia());
 		// } else if (qual==2) {
-	 	j1.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getPs());
-		j2.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getPs());
+	 	j1.setText("vida ->  " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getPs());
+		j2.setText("vida ->  " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getPs());
 		// }
 	}
 
@@ -47,7 +47,7 @@ public class VidaView extends GridPane implements GameListener {
 			j1.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ1().getPokAtivo()).getPs());
 		}
 		
-		if (Game.getInstance().getAtivoJ1().getCards().size()==0) {
+		if (Game.getInstance().getAtivoJ2().getCards().size()==0) {
 			j2.setText("morreu");
 		} else {
 			j2.setText("vida - " + ((Pokemon)Game.getInstance().getAtivoJ2().getPokAtivo()).getPs());

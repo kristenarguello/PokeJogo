@@ -28,7 +28,4 @@ public class Energia extends Card {
     public String toString() {
         return "ENERGIA -- " + getNome();
     }
-
-    //card no arraylist -- pokemon -- o que é melhor fazer o casting ou botar listas do tipo pokemon que tem constante interacao
-    //
 }

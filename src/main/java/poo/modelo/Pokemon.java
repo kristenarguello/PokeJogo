@@ -36,15 +36,13 @@ public class Pokemon extends Card {
             ativo.addCard(evolucao);
             return true;
         } else {
-            //faz a mensagenzinha:
             System.out.println("nao é compativel");
-            //"Evolução não compatível! Tente com outra carta numa próxima rodada."
             return false;
         }
     }
 
     //ataque acontece (dano)
-    public static void atacar(Pokemon atacante, Pokemon atacado) {
+    public static boolean atacar(Pokemon atacante, Pokemon atacado) {
         if (atacante.getEnergia()>=atacante.getEnergiaGasta()) {
             double diferenca = 1;
             if (atacante.getTipo()==Tipos.FOGO) {
@@ -68,9 +66,9 @@ public class Pokemon extends Card {
             }
             atacante.gastaEnergia(atacante.getEnergiaGasta());
             atacado.setPs(atacado.getPs() - ((int)(atacante.getValorAtaque() * diferenca)));
+            return true;
         } else {
-            //mensagem que nem a da vez, dizendo que nao tem energia pra atacar
-            //dizer quanto de energia tem e quaanto precisa (usar os getters)
+            return false;
         }
     }
 

@@ -12,6 +12,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.Button;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -32,18 +33,17 @@ public class GameWindow extends Application implements GameListener {
 
 		Group root = new Group();
 
-        TabPane tabPane = new TabPane();
+		TabPane tabPane = new TabPane();
 
-        Tab tab1 = new Tab("Jogador 1");
-        Tab tab2 = new Tab("Jogador 2");
-        Tab tab3 = new Tab("Mesa");
-        //Tab tab4 = new Tab("Mesa Jogador 2");
+		Tab tab1 = new Tab("Jogador 1");
+		Tab tab2 = new Tab("Jogador 2");
+		Tab tab3 = new Tab("Mesa");
+		// Tab tab4 = new Tab("Mesa Jogador 2");
 
-        tabPane.getTabs().add(tab1);
-        tabPane.getTabs().add(tab2);
-        tabPane.getTabs().add(tab3);
+		tabPane.getTabs().add(tab1);
+		tabPane.getTabs().add(tab2);
+		tabPane.getTabs().add(tab3);
 
-	
 		GridPane grid1 = new GridPane();
 		grid1.setAlignment(Pos.BASELINE_LEFT);
 		grid1.setHgap(10);
@@ -71,19 +71,16 @@ public class GameWindow extends Application implements GameListener {
 		Button butBuy1 = new Button("Comprar");
 		grid1.add(butBuy1, 1, 0);
 		butBuy1.setOnAction(e -> Game.getInstance().comprarCartaJ1());
-		
+
 		Button butAtt = new Button("Atacar");
 		grid1.add(butAtt, 2, 0);
 		butAtt.setOnAction(e -> Game.getInstance().atacar(1));
 
 		Button confirm2 = new Button("Finalizar Jogada");
-		grid1.add(confirm2, 1,1);
+		grid1.add(confirm2, 1, 1);
 		confirm2.setOnAction(e -> Game.getInstance().confirmar(1));
 
-		
-
-//-------------------------------------------------------------------
-
+		// -------------------------------------------------------------------
 
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.BASELINE_LEFT);
@@ -91,7 +88,6 @@ public class GameWindow extends Application implements GameListener {
 		grid2.setVgap(10);
 		grid2.setPadding(new Insets(25, 25, 25, 25));
 
-		
 		DeckView deckJ2 = new DeckView(2);
 		ScrollPane sd2 = new ScrollPane();
 		sd2.setPrefSize(100, 250);
@@ -119,16 +115,14 @@ public class GameWindow extends Application implements GameListener {
 		butAtt2.setOnAction(e -> Game.getInstance().atacar(2));
 
 		Button confirm1 = new Button("Finalizar Jogada");
-		grid2.add(confirm1, 1,1);
+		grid2.add(confirm1, 1, 1);
 		confirm1.setOnAction(e -> Game.getInstance().confirmar(2));
-
 
 		// Button skip2 = new Button("Pular");
 		// grid2.add(skip2, 2, 0);
 		// skip2.setOnAction(e -> Game.getInstance().pular());
 
-	
-//-------------------------------------------------------------------
+		// -------------------------------------------------------------------
 
 		GridPane grid3 = new GridPane();
 		grid3.setAlignment(Pos.BASELINE_LEFT);
@@ -171,107 +165,159 @@ public class GameWindow extends Application implements GameListener {
 		grid3.add(placarEnergia, 0, 2);
 
 		VidaView placarVida = new VidaView();
-		grid3.add(placarVida, 1,2);
+		grid3.add(placarVida, 1, 2);
+
+		TextArea regras = new TextArea("Regras: "
+				+ "frase aleatoria so pra ver se aparece.\nJogador 1 é o de cima e o Jogador 2 é o de baixo");
+		regras.setPrefWidth(225);
+		regras.setPrefHeight(275);
+		regras.setWrapText(true);
+		grid3.add(regras, 2, 0);
 
 		tab1.setContent(grid1);
-        tab2.setContent(grid2);
-        tab3.setContent(grid3);
-
+		tab2.setContent(grid2);
+		tab3.setContent(grid3);
 
 		root.getChildren().add(tabPane);
-		
-        Scene scene = new Scene(root,Paint.valueOf("#DC143C"));
-		
 
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-	
+		Scene scene = new Scene(root, Paint.valueOf("#DC143C"));
+
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
 
 	@Override
 	public void notify(GameEvent eg) {
 		Alert alert;
-		if (eg == null) return;
+		if (eg == null)
+			return;
 		if (eg.getTarget() == GameEvent.Target.GWIN) {
 			switch (eg.getAction()) {
-			case INVPLAY:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Atenção !!");
-				alert.setHeaderText("Jogada inválida!!");
-				alert.setContentText("Era a vez do jogador " + eg.getArg());
-				alert.showAndWait();
-				break;
-			case MUSTCLEAN:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Atenção !!");
-				alert.setHeaderText(null);
-				alert.setContentText("Utilize o botao \"Clean\"");
-				alert.showAndWait();
-				break;
-			case ENDGAME:
-				String text = "Fim de Jogo !!\n";
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("PARABENS");
-				alert.setHeaderText(text);
-				alert.setContentText("O jogador " + eg.getArg() + " ganhou o jogo!!!");
-				alert.showAndWait();
-				break;
-			case REMOVESEL:
-				// Esse evento não vem para cá
-				break;
-			case MUSTBUY:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("COMPRE");
-				alert.setHeaderText("Você precisa comprar uma carta para começar a jogada");
-				alert.setContentText("Compre uma carta com o botão \"Comprar\"");
-				alert.showAndWait();
-				break;
-			case MUSTATTACK:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("ATAQUE");
-				alert.setHeaderText("Você precisa atacar para finalizar sua jogada!!!");
-				alert.setContentText("Ataque com o botão \"Atacar\"");
-				alert.showAndWait();
-				break;
-			case CONTINUE:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Atenção !!");
-				alert.setHeaderText("Você deseja realizar a operação seguinte?");
-				alert.setContentText("Operação: " + eg.getArg());
-				alert.showAndWait();
-				break;
-			case VAI:
-				//não faz nada
-				break;
-			case KEEPPLAYING:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Atenção !!");
-				alert.setHeaderText("O jogo continuará! Ninguém ganhou ainda");
-				alert.setContentText("Vez do JOGADOR " + eg.getArg());
-				alert.showAndWait();
-				break;
-			case TREINADORFEZ:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("Aviso");
-				alert.setHeaderText("A carta treinador recém acionada fez...");
-				alert.setContentText(eg.getArg());
-				alert.showAndWait();
-				break;
-			case MUSTCONFIRM:
-				alert = new Alert(AlertType.WARNING);
-				alert.setTitle("CONFIRME");
-				alert.setHeaderText("Finalize sua jogada!");
-				alert.setContentText("Clique no botão \"Finalizar Jogada\" para conferir se nenhum pokemón já foi derrotado!");
-				alert.showAndWait();
-				break;
-			case ATTACK:
-				//nao vem pra ca
-				break;
-			case SHOWTABLE:
-				//nao vem pra ca
-				break;
+				case INVPLAY:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Jogada inválida!!");
+					alert.setContentText("Era a vez do jogador " + eg.getArg());
+					alert.showAndWait();
+					break;
+				case MUSTCLEAN:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText(null);
+					alert.setContentText("Utilize o botao \"Clean\"");
+					alert.showAndWait();
+					break;
+				case ENDGAME:
+					String text = "Fim de Jogo !!\n";
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("PARABÉNS");
+					alert.setHeaderText(text);
+					alert.setContentText("O jogador " + eg.getArg() + " ganhou o jogo!!!");
+					alert.showAndWait();
+					break;
+				case REMOVESEL:
+					// Esse evento não vem para cá
+					break;
+				case MUSTBUY:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("COMPRE");
+					alert.setHeaderText("Você precisa comprar uma carta para começar a jogada.");
+					alert.setContentText("Compre uma carta com o botão \"Comprar\"");
+					alert.showAndWait();
+					break;
+				case MUSTATTACK:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATAQUE");
+					alert.setHeaderText("Você precisa atacar para finalizar sua jogada!!!");
+					alert.setContentText("Ataque com o botão \"Atacar\"");
+					alert.showAndWait();
+					break;
+				case CONTINUE:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Você deseja realizar a operação seguinte?");
+					alert.setContentText("Operação: " + eg.getArg());
+					alert.showAndWait();
+					break;
+				case VAI:
+					// não faz nada
+					break;
+				case KEEPPLAYING:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("O jogo continuará! Ninguém ganhou ainda.");
+					alert.setContentText("Vez do JOGADOR " + eg.getArg());
+					alert.showAndWait();
+					break;
+				case TREINADORFEZ:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("AVISO");
+					alert.setHeaderText("A carta treinador recém acionada fez...");
+					alert.setContentText(eg.getArg());
+					alert.showAndWait();
+					break;
+				case MUSTCONFIRM:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("CONFIRME");
+					alert.setHeaderText("Finalize sua jogada!!");
+					alert.setContentText(
+							"Clique no botão \"Finalizar Jogada\" para conferir se nenhum pokemón já foi derrotado!");
+					alert.showAndWait();
+					break;
+				case ATTACK:
+					// nao vem pra ca
+					break;
+				case SHOWTABLE:
+					// nao vem pra ca
+					break;
+				case WRONGBUTTON:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Jogada inválida!!");
+					alert.setContentText("Não deveria clicar nesse botão agora! É a vez do jogador " + eg.getArg() +
+							" ou deveria fazer outra ação.");
+					alert.showAndWait();
+					break;
+				case BANCOLOTADO:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Seu banco está lotado!!");
+					alert.setContentText(null);
+					alert.showAndWait();
+					break;
+				case NAOCOMPATIVEL:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Evolução selecionada não é compatível com seu pokemón ativo!!");
+					alert.setContentText("No canto esquerdo superior da sua carta de evolução, " +
+							"existe um desenho do pokemón compatível. Dê uma olhada lá!");
+					alert.showAndWait();
+					break;
+				case VIDAMAX:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("ATENÇÃO");
+					alert.setHeaderText("Carta treinador \"" + eg.getArg() + "\"  não aplicada!");
+					alert.setContentText("Não há danos em seu pokemón ativo para curar.");
+					alert.showAndWait();
+					break;
+				case SEMENERGIA:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("SEM ENERGIA");
+					alert.setHeaderText("Seu pokemón ativo não conseguiu realizar o ataque!");
+					alert.setContentText("Não há energia suficiente para atacar. Tente atacar na próxima rodada.");
+					alert.showAndWait();
+					break;
+				case SEMCARTA:
+					alert = new Alert(AlertType.WARNING);
+					alert.setTitle("SEM CARTA");
+					alert.setHeaderText("Não há cartas disponíveis na pilha de descarte!");
+					alert.setContentText(
+							"Talvez você não tenha descartado nenhuma carta ainda, ou, não tenha descartado um pokemón básico para reviver.");
+					alert.showAndWait();
+					break;
+
 			}
-			
+
 		}
 	}
 

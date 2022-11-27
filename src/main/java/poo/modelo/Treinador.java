@@ -26,23 +26,28 @@ public class Treinador extends Card {
         this.queFaz = oqF;
     }
 
-    public void treinador(Pokemon pativo, List<Card> descarte, List<Card> banco, List<Card> ativo, List<Card> mao,
+    public boolean treinador(Pokemon pativo, List<Card> descarte, List<Card> banco, List<Card> ativo, List<Card> mao,
             CardDeck mao1, CardDeck banco1, CardDeck ativo1) {
         if (tipo == Acao.CURA) {
             curarDanos(pativo);
+            return true;
         } else if (tipo == Acao.POKEBOLA) {
             if (getNome().equalsIgnoreCase("reviver")) {
-                reviver(descarte, banco1);
+                return reviver(descarte, mao1);
             } else {
                 substituicao(banco1, ativo1, mao1);
+                return true;
             }
         } else if (tipo == Acao.ENERGIA) {
             if (getNome().equalsIgnoreCase("substituição de energia")) {
                 substituicaoEnergia(pativo, banco);
+                return true;
             } else {
                 recuperacaoEnergia(descarte, mao1);
+                return true;
             }
         }
+        return true;
     }
 
     // curar danos
@@ -54,30 +59,27 @@ public class Treinador extends Card {
     }
 
     // mexer em algum baralho e procurar um pokemon basico -reviver
-    public void reviver(List<Card> descarte, CardDeck banco) {
+    public boolean reviver(List<Card> descarte, CardDeck mao) {
+        boolean tem = false;
         if (descarte.size() > 0) {
-            if (banco.getBaralho().size() < 3) {
-                for (Card c : descarte) {
-                    if (c instanceof Pokemon) {
-                        Pokemon a = (Pokemon) c;
-                        if (a.getGeracaoAnterior()!=null) {
-                            banco.addCard(c);
-                            descarte.remove(c);
-                            break;
-                        }
+            for (Card c : descarte) {
+                if (c instanceof Pokemon) {
+                    Pokemon a = (Pokemon) c;
+                    if (a.getGeracaoAnterior() == null) {
+                        mao.addCard(c);
+                        descarte.remove(c);
+                        tem = true;
+                        return true;
                     }
                 }
-                // mensagenzinha:
-                // "Não há pokémon básico na pilha de descarte!"
-            } else {
-                // mensagenzinha:
-                // "bANCO ESTA CHEIO"
+                if (!tem) {
+                    return false;
+                }
             }
-        } // mensagem: descarte esta vazio
+        } return false;
     }
 
     // trocar o pokemon ativo pelo bem da esquerda do banco
-    // substituicao
     public void substituicao(CardDeck banco, CardDeck ativo, CardDeck mao) {
 
         if (banco.getCards().size() != 0) {
@@ -85,7 +87,7 @@ public class Treinador extends Card {
             for (Card card : ativo.getBaralho()) {
                 if (card instanceof Pokemon) {
                     Pokemon p = (Pokemon) card;
-                    if (p.getGeracaoAnterior()!=null) {
+                    if (p.getGeracaoAnterior() != null) {
                         mao.getBaralho().add(p);
                     } else
                         banco.getBaralho().add(p);
@@ -94,9 +96,6 @@ public class Treinador extends Card {
             banco.getBaralho().remove(null);
             ativo.getBaralho().clear();
             ativo.getBaralho().add(c);
-        } else {
-            // mensagenzinha:
-            // "Banco está vazio"
         }
     }
 
@@ -123,10 +122,6 @@ public class Treinador extends Card {
             }
             contador--;
         }
-
-        if (contador == 0) {
-            // mensagenzinha avisando que nao achou nenhuma
-        }
     }
 
     public void substituicaoEnergia(Pokemon ativo, List<Card> banco) {
@@ -144,11 +139,7 @@ public class Treinador extends Card {
                 }
             }
 
-            //int aux = ativo.getEnergia();
             ativo.setEnergia(maiorEnergia.getEnergia());
-            //maiorEnergia.setEnergia(aux);
-        } else {
-            // mensagem nada no banco
         }
     }
 
