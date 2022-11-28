@@ -335,6 +335,7 @@ public class Game {
 					System.out.println("baralho ou carta errado");
 					System.out.println("player>>> " + player);
 				}
+				gameEvent = null;
 				nextPlayer();
 				System.out.println("proximo jogador, terminou a primeira parte");
 				System.out.println("player>>>" + player);
@@ -513,6 +514,7 @@ public class Game {
 			for (var observer : observers) {
 				observer.notify(gameEvent);
 			}
+			return;
 		}
 
 		maoJ1.addCard(deckJ1.getCards().get(0));
@@ -539,10 +541,12 @@ public class Game {
 			for (var observer : observers) {
 				observer.notify(gameEvent);
 			}
+			return;
 		}
 
 		maoJ2.addCard(deckJ2.getCards().get(0));
 		deckJ2.getBaralho().remove(0);
+		gameEvent = null;
 		nextPlayer();
 		for (var observer : observers) {
 			observer.notify(gameEvent);
