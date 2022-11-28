@@ -3,9 +3,6 @@ package poo.modelo;
 import java.util.LinkedList;
 import java.util.List;
 
-//import poo.modelo.GameEvent.Action;
-//import poo.modelo.GameEvent.Target;
-
 public class Game {
 	private static Game game = new Game();
 	private CardDeck deckJ1, deckJ2;
@@ -89,6 +86,9 @@ public class Game {
 
 		if (deckAcionado == verso) {
 			nextPlayer();
+			for (var observer : observers) {
+				observer.notify(gameEvent);
+			}
 			System.out.println("player>>> " + player);
 			return;
 		}
@@ -138,7 +138,11 @@ public class Game {
 					System.out.println("baralho ou carta errado");
 					System.out.println("player>>> " + player);
 				}
+				gameEvent = null;
 				nextPlayer();
+				for (var observer : observers) {
+					observer.notify(gameEvent);
+				}
 				System.out.println("proximo jogador, terminou a primeira parte");
 				System.out.println("player>>>" + player);
 				return;
@@ -334,6 +338,9 @@ public class Game {
 				nextPlayer();
 				System.out.println("proximo jogador, terminou a primeira parte");
 				System.out.println("player>>>" + player);
+				for (var observer : observers) {
+					observer.notify(gameEvent);
+				}
 				return;
 				// --------------------------------------------------------------------------------------------------------------
 				// jogador escolhe uma evolucao (carta) pra aplicar
@@ -491,26 +498,6 @@ public class Game {
 
 	}
 
-	// // Acionada pelo botao de limpar
-	// public void removeSelected() {
-	// GameEvent gameEvent = null;
-	// if (player != 14) {
-	// return;
-	// }
-	// if (ganhador != 0) {
-	// gameEvent = new GameEvent(this, GameEvent.Target.GWIN,
-	// GameEvent.Action.ENDGAME, "");
-	// for (var observer : observers) {
-	// observer.notify(gameEvent);
-	// }
-	// }
-
-	// deckJ1.removeSel();
-	// deckJ2.removeSel();
-
-	// nextPlayer();
-	// }
-
 	// acionado pelo botao de comprar
 	public void comprarCartaJ1() {
 		GameEvent gameEvent = null;
@@ -531,6 +518,9 @@ public class Game {
 		maoJ1.addCard(deckJ1.getCards().get(0));
 		deckJ1.getBaralho().remove(0);
 		nextPlayer();
+		for (var observer : observers) {
+			observer.notify(gameEvent);
+		}
 		System.out.println("carta comprarda e proximo jogador");
 		System.out.println("player>>>>> " + player);
 	}
@@ -554,6 +544,9 @@ public class Game {
 		maoJ2.addCard(deckJ2.getCards().get(0));
 		deckJ2.getBaralho().remove(0);
 		nextPlayer();
+		for (var observer : observers) {
+			observer.notify(gameEvent);
+		}
 		System.out.println("carta comprarda e proximo jogador");
 		System.out.println("player>>>>> " + player);
 	}
@@ -611,10 +604,11 @@ public class Game {
 			ativoJ1 = aux;
 		}
 
+		
+		nextPlayer();
 		for (var observer : observers) {
 			observer.notify(gameEvent);
 		}
-		nextPlayer();
 	}
 
 	// acionado pelo botao Finalizar Jogada
@@ -760,5 +754,9 @@ public class Game {
 
 	public CardDeck getBancoJ2() {
 		return bancoJ2;
+	}
+
+	public int getPlayer() {
+		return player;
 	}
 }

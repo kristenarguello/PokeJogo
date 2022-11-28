@@ -79,6 +79,9 @@ public class GameWindow extends Application implements GameListener {
 		grid1.add(confirm2, 1, 1);
 		confirm2.setOnAction(e -> Game.getInstance().confirmar(1));
 
+		JogadaView player = new JogadaView();
+		grid1.add(player, 1, 2);
+
 		// -------------------------------------------------------------------
 
 		GridPane grid2 = new GridPane();
@@ -117,9 +120,8 @@ public class GameWindow extends Application implements GameListener {
 		grid2.add(confirm1, 1, 1);
 		confirm1.setOnAction(e -> Game.getInstance().confirmar(2));
 
-		// Button skip2 = new Button("Pular");
-		// grid2.add(skip2, 2, 0);
-		// skip2.setOnAction(e -> Game.getInstance().pular());
+		JogadaView player2 = new JogadaView();
+		grid2.add(player2, 1, 2);
 
 		// -------------------------------------------------------------------
 
@@ -165,6 +167,7 @@ public class GameWindow extends Application implements GameListener {
 
 		VidaView placarVida = new VidaView();
 		grid3.add(placarVida, 1, 2);
+
 
 		TextArea regras = new TextArea("=-=-=-=-REGRAS-=-=-=-=" +
 										"\nJogador 1 = cima " +
